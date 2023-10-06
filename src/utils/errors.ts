@@ -37,6 +37,10 @@ export const getNoCartExists = (id: string):ResponseError => {
 	return new ResponseError(`No cart for user ${id}`, 400);
 }
 
+export const throwNoProductExists = () => {
+	throw new ResponseError(`No product for user`, 400);
+}
+
 export const throwEmptyCart = (id: string) => {
 	throw new Error(`Cart for user ${id} is empty`);
 }

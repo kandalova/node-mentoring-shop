@@ -13,6 +13,11 @@ export interface ICartItem{
   count: number,
 }
 
+export interface ICartItemByID{
+	productId: string,
+  count: number,
+}
+
 export type OmitCart =  Omit<ICart, 'userId' | 'isDeleted'>;
 
 export enum CartEditableProperties {
