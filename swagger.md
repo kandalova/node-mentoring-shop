@@ -1,17 +1,14 @@
 ---
 title: API v1.0.0
 language_tabs:
-  - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - ruby: Ruby
-  - python: Python
-  - php: PHP
-  - java: Java
-  - go: Go
+  - http: http
+  - HTTP: HTTP
+language_clients:
+  - http: ""
+  - HTTP: ""
 toc_footers: []
 includes: []
-search: true
+search: false
 highlight_theme: darkula
 headingLevel: 2
 
@@ -25,15 +22,15 @@ headingLevel: 2
 
 <h1 id="api-cart">cart</h1>
 
-## get__api_profile_cart
+## Get user cart or create if it is missing
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X GET /api/profile/cart \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+GET /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -45,137 +42,9 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/profile/cart',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.get '/api/profile/cart',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.get('/api/profile/cart', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('GET','/api/profile/cart', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/profile/cart");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/api/profile/cart", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `GET /api/profile/cart`
 
-*Get user cart or create if it is missing*
-
-<h3 id="get__api_profile_cart-parameters">Parameters</h3>
+<h3 id="get-user-cart-or-create-if-it-is-missing-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -241,7 +110,7 @@ func main() {
 }
 ```
 
-<h3 id="get__api_profile_cart-responses">Responses</h3>
+<h3 id="get-user-cart-or-create-if-it-is-missing-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -254,16 +123,16 @@ func main() {
 This operation does not require authentication
 </aside>
 
-## put__api_profile_cart
+## Update user cart
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X PUT /api/profile/cart \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+PUT /api/profile/cart HTTP/1.1
+
+Content-Type: application/json
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -276,143 +145,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-const inputBody = '{
-  "productId": "915b2f40-9fd9-47f2-9b51-628f3dc69aac",
-  "count": 5
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/profile/cart',
-{
-  method: 'PUT',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.put '/api/profile/cart',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.put('/api/profile/cart', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Content-Type' => 'application/json',
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('PUT','/api/profile/cart', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/profile/cart");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("PUT");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("PUT", "/api/profile/cart", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `PUT /api/profile/cart`
-
-*Update user cart*
 
 > Body parameter
 
@@ -423,7 +156,7 @@ func main() {
 }
 ```
 
-<h3 id="put__api_profile_cart-parameters">Parameters</h3>
+<h3 id="update-user-cart-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -512,7 +245,7 @@ func main() {
 }
 ```
 
-<h3 id="put__api_profile_cart-responses">Responses</h3>
+<h3 id="update-user-cart-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -527,15 +260,15 @@ func main() {
 This operation does not require authentication
 </aside>
 
-## delete__api_profile_cart
+## Empty user cart
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X DELETE /api/profile/cart \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+DELETE /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -547,137 +280,9 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/profile/cart',
-{
-  method: 'DELETE',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.delete '/api/profile/cart',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.delete('/api/profile/cart', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('DELETE','/api/profile/cart', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/profile/cart");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "/api/profile/cart", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `DELETE /api/profile/cart`
 
-*Empty user cart*
-
-<h3 id="delete__api_profile_cart-parameters">Parameters</h3>
+<h3 id="empty-user-cart-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -729,7 +334,7 @@ func main() {
 }
 ```
 
-<h3 id="delete__api_profile_cart-responses">Responses</h3>
+<h3 id="empty-user-cart-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -742,15 +347,15 @@ func main() {
 This operation does not require authentication
 </aside>
 
-## post__api_profile_cart_checkout
+## Create an order
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X POST /api/profile/cart/checkout \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+POST /api/profile/cart/checkout HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -762,137 +367,9 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/profile/cart/checkout',
-{
-  method: 'POST',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.post '/api/profile/cart/checkout',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.post('/api/profile/cart/checkout', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('POST','/api/profile/cart/checkout', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/profile/cart/checkout");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "/api/profile/cart/checkout", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `POST /api/profile/cart/checkout`
 
-*Create an order*
-
-<h3 id="post__api_profile_cart_checkout-parameters">Parameters</h3>
+<h3 id="create-an-order-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -991,7 +468,7 @@ func main() {
 }
 ```
 
-<h3 id="post__api_profile_cart_checkout-responses">Responses</h3>
+<h3 id="create-an-order-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -1007,15 +484,15 @@ This operation does not require authentication
 
 <h1 id="api-product">product</h1>
 
-## get__api_products
+## Returns a list of products
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X GET /api/products \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+GET /api/products HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -1027,137 +504,9 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/products',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.get '/api/products',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.get('/api/products', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('GET','/api/products', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/products");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/api/products", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `GET /api/products`
 
-*Returns a list of products*
-
-<h3 id="get__api_products-parameters">Parameters</h3>
+<h3 id="returns-a-list-of-products-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1220,7 +569,7 @@ func main() {
 }
 ```
 
-<h3 id="get__api_products-responses">Responses</h3>
+<h3 id="returns-a-list-of-products-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -1229,7 +578,7 @@ func main() {
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<h3 id="get__api_products-responseschema">Response Schema</h3>
+<h3 id="returns-a-list-of-products-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -1248,15 +597,15 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__api_products_{productId}
+## Returns single product
 
 > Code samples
 
-```shell
-# You can also use wget
-curl -X GET /api/products/{productId} \
-  -H 'Accept: application/json' \
-  -H 'x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+```http
+GET /api/products/{productId} HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
@@ -1268,137 +617,9 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'x-user-id':'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-};
-
-fetch('/api/products/{productId}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-result = RestClient.get '/api/products/{productId}',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'x-user-id': 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
-}
-
-r = requests.get('/api/products/{productId}', headers = headers)
-
-print(r.json())
-
-```
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-$headers = array(
-    'Accept' => 'application/json',
-    'x-user-id' => 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c',
-);
-
-$client = new \GuzzleHttp\Client();
-
-// Define array of request body.
-$request_body = array();
-
-try {
-    $response = $client->request('GET','/api/products/{productId}', array(
-        'headers' => $headers,
-        'json' => $request_body,
-       )
-    );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
-
- // ...
-
-```
-
-```java
-URL obj = new URL("/api/products/{productId}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-```
-
-```go
-package main
-
-import (
-       "bytes"
-       "net/http"
-)
-
-func main() {
-
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "x-user-id": []string{"eb5a26af-6e4c-4f31-a9b1-3450d42ac66c"},
-    }
-
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "/api/products/{productId}", data)
-    req.Header = headers
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
-}
-
-```
-
 `GET /api/products/{productId}`
 
-*Returns single product*
-
-<h3 id="get__api_products_{productid}-parameters">Parameters</h3>
+<h3 id="returns-single-product-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1465,7 +686,7 @@ func main() {
 }
 ```
 
-<h3 id="get__api_products_{productid}-responses">Responses</h3>
+<h3 id="returns-single-product-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
