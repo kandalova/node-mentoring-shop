@@ -1,9 +1,11 @@
 ---
 title: API v1.0.0
 language_tabs:
-  - "'http": HTTP'
+  - http: http
+  - HTTP: HTTP
 language_clients:
-  - "'http": ""
+  - http: ""
+  - HTTP: ""
 toc_footers: []
 includes: []
 search: false
@@ -14,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="api">API v1.0.0</h1>
+<h1 id="api">null v1.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -23,6 +25,22 @@ headingLevel: 2
 ## get__api_profile_cart
 
 > Code samples
+
+```http
+GET /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+GET /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
 
 `GET /api/profile/cart`
 
@@ -110,6 +128,24 @@ This operation does not require authentication
 ## put__api_profile_cart
 
 > Code samples
+
+```http
+PUT /api/profile/cart HTTP/1.1
+
+Content-Type: application/json
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+PUT /api/profile/cart HTTP/1.1
+
+Content-Type: application/json
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
 
 `PUT /api/profile/cart`
 
@@ -232,6 +268,22 @@ This operation does not require authentication
 
 > Code samples
 
+```http
+DELETE /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+DELETE /api/profile/cart HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
 `DELETE /api/profile/cart`
 
 *Empty user cart*
@@ -304,6 +356,22 @@ This operation does not require authentication
 ## post__api_profile_cart_checkout
 
 > Code samples
+
+```http
+POST /api/profile/cart/checkout HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+POST /api/profile/cart/checkout HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
 
 `POST /api/profile/cart/checkout`
 
@@ -428,6 +496,22 @@ This operation does not require authentication
 
 > Code samples
 
+```http
+GET /api/products HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+GET /api/products HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
 `GET /api/products`
 
 *Returns a list of products*
@@ -526,6 +610,22 @@ This operation does not require authentication
 ## get__api_products_{productId}
 
 > Code samples
+
+```http
+GET /api/products/{productId} HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```http
+GET /api/products/{productId} HTTP/1.1
+
+Accept: application/json
+x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
 
 `GET /api/products/{productId}`
 
@@ -1003,3 +1103,4 @@ This operation does not require authentication
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |message|string|false|none|none|
+
