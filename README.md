@@ -33,4 +33,7 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 - For ```DELETE``` ```/api/profile/cart``` soft-delete approach is be used. Make sure that client of your API will not know that soft-delete approach is used.
 
 **API endpoints**
+
+[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/swagger.md)
+
 <img width="729" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/f1e36899-e171-436e-83c4-72dcb20264e2">
