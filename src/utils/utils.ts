@@ -16,8 +16,6 @@ export const promiseHandler = async <T>(prom: Promise<T>, next: NextFunction) =>
 	try {
 		return await prom;
 	} catch (error) {
-		console.log('HERE')
-		console.log(error)
 		next(error);
 	}
 }
