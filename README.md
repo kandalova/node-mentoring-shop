@@ -3,6 +3,8 @@ https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/express-layered-architecture
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
+In this task we are going to implement functionality for managing carts, creating orders and products.
+
 The application has 4 primary entities:
 
 <code>User</code> - can add some products to the cart and then order them ([scheme](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/src/scheme/UserScheme.ts)).
