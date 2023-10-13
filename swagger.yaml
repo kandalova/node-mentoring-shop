@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Node.js GMP Express application
+  title: 
   version: 1.0.0
 tags:
   - name: cart
@@ -570,7 +570,7 @@ components:
       properties:
         email:
           type: string
-          example: "ann.jones@epam.com"
+          example: "ann.jones@gmail.com"
         password:
           type: string
           example: "DDQldls?kdpw0fk"

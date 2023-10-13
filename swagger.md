@@ -1,5 +1,5 @@
 ---
-title: Node.js GMP Express application v1.0.0
+title: API v1.0.0
 language_tabs:
   - shell: Shell
   - http: HTTP
@@ -19,11 +19,11 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="node-js-gmp-express-application">Node.js GMP Express application v1.0.0</h1>
+<h1 id="api">null v1.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-<h1 id="node-js-gmp-express-application-cart">cart</h1>
+<h1 id="api-cart">cart</h1>
 
 ## get__api_profile_cart
 
@@ -1005,7 +1005,7 @@ func main() {
 This operation does not require authentication
 </aside>
 
-<h1 id="node-js-gmp-express-application-product">product</h1>
+<h1 id="api-product">product</h1>
 
 ## get__api_products
 
@@ -1811,7 +1811,7 @@ This operation does not require authentication
 
 ```json
 {
-  "email": "ann.jones@epam.com",
+  "email": "ann.jones@gmail.com",
   "password": "DDQldls?kdpw0fk"
 }
 
