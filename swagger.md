@@ -1,11 +1,9 @@
 ---
 title: API v1.0.0
 language_tabs:
-  - http: http
-  - HTTP: HTTP
+  - "'http": HTTP'
 language_clients:
-  - http: ""
-  - HTTP: ""
+  - "'http": ""
 toc_footers: []
 includes: []
 search: false
@@ -16,35 +14,21 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="api">null v1.0.0</h1>
+<h1 id="api">API v1.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 <h1 id="api-cart">cart</h1>
 
-## Get user cart or create if it is missing
+## get__api_profile_cart
 
 > Code samples
 
-```http
-GET /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-GET /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `GET /api/profile/cart`
 
-<h3 id="get-user-cart-or-create-if-it-is-missing-parameters">Parameters</h3>
+*Get user cart or create if it is missing*
+
+<h3 id="get__api_profile_cart-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -110,7 +94,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="get-user-cart-or-create-if-it-is-missing-responses">Responses</h3>
+<h3 id="get__api_profile_cart-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -123,29 +107,13 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 This operation does not require authentication
 </aside>
 
-## Update user cart
+## put__api_profile_cart
 
 > Code samples
 
-```http
-PUT /api/profile/cart HTTP/1.1
-
-Content-Type: application/json
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-PUT /api/profile/cart HTTP/1.1
-
-Content-Type: application/json
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `PUT /api/profile/cart`
+
+*Update user cart*
 
 > Body parameter
 
@@ -156,7 +124,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="update-user-cart-parameters">Parameters</h3>
+<h3 id="put__api_profile_cart-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -245,7 +213,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="update-user-cart-responses">Responses</h3>
+<h3 id="put__api_profile_cart-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -260,29 +228,15 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 This operation does not require authentication
 </aside>
 
-## Empty user cart
+## delete__api_profile_cart
 
 > Code samples
 
-```http
-DELETE /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-DELETE /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `DELETE /api/profile/cart`
 
-<h3 id="empty-user-cart-parameters">Parameters</h3>
+*Empty user cart*
+
+<h3 id="delete__api_profile_cart-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -334,7 +288,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="empty-user-cart-responses">Responses</h3>
+<h3 id="delete__api_profile_cart-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -347,29 +301,15 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 This operation does not require authentication
 </aside>
 
-## Create an order
+## post__api_profile_cart_checkout
 
 > Code samples
 
-```http
-POST /api/profile/cart/checkout HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-POST /api/profile/cart/checkout HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `POST /api/profile/cart/checkout`
 
-<h3 id="create-an-order-parameters">Parameters</h3>
+*Create an order*
+
+<h3 id="post__api_profile_cart_checkout-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -468,7 +408,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="create-an-order-responses">Responses</h3>
+<h3 id="post__api_profile_cart_checkout-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -484,29 +424,15 @@ This operation does not require authentication
 
 <h1 id="api-product">product</h1>
 
-## Returns a list of products
+## get__api_products
 
 > Code samples
 
-```http
-GET /api/products HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-GET /api/products HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `GET /api/products`
 
-<h3 id="returns-a-list-of-products-parameters">Parameters</h3>
+*Returns a list of products*
+
+<h3 id="get__api_products-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -569,7 +495,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="returns-a-list-of-products-responses">Responses</h3>
+<h3 id="get__api_products-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -578,7 +504,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<h3 id="returns-a-list-of-products-responseschema">Response Schema</h3>
+<h3 id="get__api_products-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -597,29 +523,15 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## Returns single product
+## get__api_products_{productId}
 
 > Code samples
 
-```http
-GET /api/products/{productId} HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
-```http
-GET /api/products/{productId} HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
-
-```
-
 `GET /api/products/{productId}`
 
-<h3 id="returns-single-product-parameters">Parameters</h3>
+*Returns single product*
+
+<h3 id="get__api_products_{productid}-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -686,7 +598,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 }
 ```
 
-<h3 id="returns-single-product-responses">Responses</h3>
+<h3 id="get__api_products_{productid}-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -1091,4 +1003,3 @@ This operation does not require authentication
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |message|string|false|none|none|
-
