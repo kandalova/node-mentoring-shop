@@ -1,12 +1,12 @@
-export interface IResponseError{
-	data:null,
+export interface IResponseError {
+	data: null,
 	error: {
-    message: string
-  },
+		message: string
+	},
 }
 
-export interface IResponse{
+export interface IResponse {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	data:any,
+	data: any,
 	error: null,
 }

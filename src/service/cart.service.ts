@@ -1,13 +1,14 @@
 import { deleteCartItem, findUserCart, findUserCartIdx, getCartByIdx, getCartProductIdx, pushCart, pushCartItem, updateCartItemCount, updateCartProperty } from "../repository/cart.repository";
 import { pushOrder } from "../repository/order.repository";
+import { findProduct } from "../repository/product.repository";
 import { CartEditableProperties, ICartItemByID, ICartResponse, IDeleteCartResponse } from "../scheme/CartScheme";
 import { IOrderInfo } from "../scheme/OrderScheme";
 import { generateCart, generateOrder, getCartResponse, getDeleteCartResponse } from "../utils/cartUtils";
 import { throwCartExistsError, throwEmptyCart, throwNoCartExists, throwNoProductExists } from "../utils/errors";
-import { findProduct } from "./product.service";
 
 
-export const createCart = async (userId: string, isGetOrCreate = false): Promise<ICartResponse> => {
+
+export const createOrGetCart = async (userId: string, isGetOrCreate = false): Promise<ICartResponse> => {
 	const userCart = await findUserCart(userId);
 	if (userCart && isGetOrCreate) {
 		return getCartResponse(userCart);
@@ -31,32 +32,32 @@ export const deleteCart = async (userId: string): Promise<IDeleteCartResponse> =
 }
 
 export const postCart = async (userId: string): Promise<ICartResponse> => {
-	return createCart(userId);
+	return createOrGetCart(userId);
 };
 
 export const getCart = async (userId: string): Promise<ICartResponse> => {
-	return createCart(userId, true);
+	return createOrGetCart(userId, true);
 }
 
-export const updateCart = async (userId: string, {productId, count}: ICartItemByID): Promise<ICartResponse> => {
+export const updateCart = async (userId: string, { productId, count }: ICartItemByID): Promise<ICartResponse> => {
 	const cartIdx = await findUserCartIdx(userId);
 	if (cartIdx === -1) {
 		throwEmptyCart(userId);
 	}
 	const productIdx = await getCartProductIdx(cartIdx, productId);
-	if(count>0 && productIdx===-1){
+	if (count > 0 && productIdx === -1) {
 		const product = await findProduct(productId);
-		if(!product){
+		if (!product) {
 			throwNoProductExists();
 		}
-		else{
-			await pushCartItem(cartIdx, {product, count})
+		else {
+			await pushCartItem(cartIdx, { product, count })
 		}
 	}
-	if (count>0 && productIdx>=0) {
+	if (count > 0 && productIdx >= 0) {
 		await updateCartItemCount(cartIdx, productIdx, count);
 	}
-	if (count===0 && productIdx>=0) {
+	if (count === 0 && productIdx >= 0) {
 		await deleteCartItem(cartIdx, productIdx);
 	}
 	return await getCartResponse(await getCartByIdx(cartIdx));
@@ -68,7 +69,7 @@ export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
 		throwEmptyCart(userId);
 	}
 	const cart = await getCartByIdx(cartIdx);
-	if(cart.items.length === 0){
+	if (cart.items.length === 0) {
 		throwEmptyCart(userId);
 	}
 	const newOrder = generateOrder(cart, orderInfo);

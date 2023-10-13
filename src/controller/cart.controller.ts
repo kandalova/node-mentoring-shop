@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
-import { createCart, createOrder, deleteCart, updateCart } from "../service/cart.service";
-import { promiseHandler } from "../utils/utils";
+import { createOrGetCart, createOrder, deleteCart, updateCart } from "../service/cart.service";
+// import { promiseHandler } from "../utils/utils";
 
-const cartRouter = express.Router(); 
+const cartRouter = express.Router();
 cartRouter.use(express.json());
 
 // cartRouter.post("/", async (req:Request, res:Response, next:NextFunction) => {
@@ -11,49 +11,49 @@ cartRouter.use(express.json());
 // 		res.status(201).send(cart);	
 // });
 
-cartRouter.get("/", async (req:Request, res:Response, next:NextFunction) => {
-	try{
+cartRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
+	try {
 		const userId = req.header('x-user-id')!;
-		const cart = await createCart(userId, true);
+		const cart = await createOrGetCart(userId, true);
 		res.send(cart);
 	}
-	catch(err){
+	catch (err) {
 		next(err);
 	}
 
 });
 
-cartRouter.delete("/", async (req:Request, res:Response, next:NextFunction) => {
-	try{
+cartRouter.delete("/", async (req: Request, res: Response, next: NextFunction) => {
+	try {
 		const userId = req.header('x-user-id')!;
 		const data = await deleteCart(userId);
 		res.send(data);
 	}
-	catch(err){
+	catch (err) {
 		next(err);
-	}		
+	}
 });
 
-cartRouter.post("/checkout", async (req:Request, res:Response, next:NextFunction) => {
-	try{
+cartRouter.post("/checkout", async (req: Request, res: Response, next: NextFunction) => {
+	try {
 		const userId = req.header('x-user-id')!;
 		const order = await createOrder(userId, req.body);
 		res.send(order);
 	}
-	catch(err){
+	catch (err) {
 		next(err);
-	}		
+	}
 });
 
-cartRouter.put("/", async (req:Request, res:Response, next:NextFunction) => {
-	try{
+cartRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
+	try {
 		const userId = req.header('x-user-id')!;
 		const order = await updateCart(userId, req.body);
 		res.send(order);
 	}
-	catch(err){
+	catch (err) {
 		next(err);
-	}		
+	}
 });
 
 export default cartRouter;

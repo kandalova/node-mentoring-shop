@@ -2,8 +2,8 @@ import { ICartItem } from "./CartScheme";
 
 type ORDER_STATUS = 'created' | 'completed';
 
-export interface IOrder{
-	id: string,
+export interface IOrder {
+  id: string,
   userId: string;
   cartId: string;
   items: ICartItem[]
@@ -22,7 +22,7 @@ export interface IOrder{
 }
 
 
-export type IOrderInfo = Pick<IOrder, "payment" | "delivery"| "comments">;
+export type IOrderInfo = Pick<IOrder, "payment" | "delivery" | "comments">;
 
 export enum OrderStatuses {
   Created = 'created',

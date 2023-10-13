@@ -1,16 +1,19 @@
-import { productDB } from "..";
-import { IProduct } from "../scheme/ProductScheme";
+import { findProduct, findProducts } from "../repository/product.repository";
+import { IProductResponse, IProductsResponse } from "../scheme/ProductScheme";
+import { throwNoProductExists } from "../utils/errors";
+import { getProductResponse, getProductsResponse } from "../utils/productUtils";
 
-export const getTotalPrice = (products: IProduct[]):number =>{
-	let result = 0;
-	products.map(product=>{
-		result=+product.price;
-	});
-	return result;
-}
+export const getProduct = async (productId: string): Promise<IProductResponse | undefined> => {
+	const product = await findProduct(productId);
+	if (!product) {
+		throwNoProductExists();
+	}
+	else {
+		return getProductResponse(product);
+	}
+};
 
-
-export const findProduct = async (id: string):Promise<IProduct | undefined>=>{
-	const product = await productDB.find((product) => product.id === id);
-	return product;
-}
+export const getProducts = async (): Promise<IProductsResponse> => {
+	const products = await findProducts();
+	return getProductsResponse(products);
+};
