@@ -1,18 +1,9 @@
-import { users } from "./db/user.db.js"
-import { products } from "./db/product.db.js"
-import { carts } from "./db/cart.db.js"
-import { orders } from "./db/order.db.js"
 import express, { NextFunction, Request, Response } from "express";
 import { findUser } from "./repository/user.repository.ts";
 import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
 import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/errors.ts";
 import { getResponseError } from "./utils/utils.ts";
-
-export const userDB = users;
-export const productDB = products;
-export const cartDB = carts;
-export const orderDB = orders;
 
 export const app = express();
 const PORT = 3000;

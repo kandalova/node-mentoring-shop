@@ -1,4 +1,4 @@
-import { productDB } from "..";
+import { productDB } from "../db/db";
 import { IProduct } from "../scheme/ProductScheme";
 
 export const findProduct = async (id: string): Promise<IProduct | undefined> => {

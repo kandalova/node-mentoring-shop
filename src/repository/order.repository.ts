@@ -1,4 +1,4 @@
-import { orderDB } from "..";
+import { orderDB } from "../db/db";
 import { IOrder } from "../scheme/OrderScheme";
 
 export const pushOrder = async (order: IOrder): Promise<number> => {

@@ -1,4 +1,4 @@
-import { cartDB } from "..";
+import { cartDB } from "../db/db";
 import { CartEditableProperties, ICart, ICartItem } from "../scheme/CartScheme";
 
 export const pushCart = async (cart: ICart) => {
