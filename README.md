@@ -3,7 +3,7 @@ https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/express-layered-architecture
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
-In this task we are going to implement functionality for managing carts, creating orders and products.
+In this task we will need to modify the application our created in Express and Layered Architecture module by moving data storage to Relational database.
 
 The application has 4 primary entities:
 
@@ -27,13 +27,13 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 **Implementation criteria:**
 
 - TypeScript is used.
-- Application is implemented following Three Layered Architecture. Layers are separated by file names. For example <code>xxx.repository.ts</code> contains functions to retrieve data (data access layer), <code>xxx.service.ts</code> contains services that implement business logic, <code>xxx.controller.ts</code> contains functions that manage status codes/responses returned (presentation layer).
-- Data is stored either in memory or on file system.
-- joi is used to validate data in PUT /api/profile/cart.
-- Simple authentication middleware is added to check if user with such id exists. User id is passed in x-user-id header.
-- Order entity has copy of products. If you have only product id in order, it may lead to inconsistency. For example, if user creates an order and after that price is changed, the order price shouldn't be changed.
-- For ```DELETE``` ```/api/profile/cart``` soft-delete approach is be used. Make sure that client of your API will not know that soft-delete approach is used.
-
+- Data is stored in PostgreSQL database.
+- Docker image is used for local development (check Node.js and database interactions section for an example of docker-compose file).
+- ORM is used to query data (e.g TypeORM, Sequelize, Mikro-ORM).
+- Migrations are used to create and delete tables (TypeORM, Sequelize, Mikro-ORM).
+- Seeds are used to populate database with test data, e.g products, orders (TypeORM, Sequelize, Mikro-ORM)
+- If Mikro-ORM is used, type-safe relations and collections are used.
+- 
 **API endpoints**
 
 [swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/swagger.md)
