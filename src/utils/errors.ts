@@ -56,3 +56,7 @@ export const getUnauthorizedError = (status = 401) => {
 export const getForbidenError = (status = 403) => {
 	return getResposeError(`You must be authorized user`, status)
 }
+
+export const getPutSchemeError = (status = 400) => {
+	return getResposeError(`Bad request body`, status)
+}
