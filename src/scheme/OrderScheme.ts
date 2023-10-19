@@ -21,6 +21,17 @@ export interface IOrder {
   total: number;
 }
 
+export interface IPayment {
+  type: string,
+  address?: unknown,
+  creditCard?: unknown,
+}
+
+export interface IDelivery {
+  type: string,
+  address: unknown,
+}
+
 
 export type IOrderInfo = Pick<IOrder, "payment" | "delivery" | "comments">;
 
