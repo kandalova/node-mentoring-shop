@@ -1,5 +1,7 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { Collection, Entity, ManyToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { v4 } from "uuid";
+import { Cart } from "./cart";
+import { CartItem } from "./cartItem";
 
 @Entity()
 export class Product {
@@ -14,6 +16,9 @@ export class Product {
 
 	@Property()
 	price: number;
+
+	@ManyToMany(() => Cart, "products", { pivotEntity: () => CartItem })
+	carts = new Collection<Cart>(this)
 
 	constructor(title: string, description: string, price: number) {
 		this.title = title;

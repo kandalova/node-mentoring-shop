@@ -1,9 +1,10 @@
-import { Entity, ManyToOne, OneToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from "@mikro-orm/core";
 import { v4 } from "uuid";
 import { User } from "./user.ts";
-import { Ref, Reference } from "@mikro-orm/core/entity";
+import { Collection, Ref, Reference } from "@mikro-orm/core/entity";
+import { Product } from "./product.ts";
+import { CartItem } from "./cartItem.ts";
 import { Order } from "./order.ts";
-import { ICartItem } from "../scheme/CartScheme.ts";
 
 @Entity()
 export class Cart {
@@ -16,13 +17,16 @@ export class Cart {
 	@ManyToOne(() => User, { ref: true })
 	user: Ref<User>
 
-	@Property()
-	items: ICartItem[];
-	
-	@OneToOne(() => Order, order => order.id, { orphanRemoval: true })
-  order!: Order;
+	@ManyToMany(() => Product, 'carts', { owner: true, pivotEntity: () => CartItem })
+	products = new Collection<Product>(this);
 
-	constructor(userId: string) {
-		this.user = Reference.createFromPK(User, userId);
+	@OneToMany(() => CartItem, cartItem => cartItem.cart, { orphanRemoval: true })
+	cartItems: Collection<CartItem> = new Collection<CartItem>(this);
+
+	@OneToOne(() => Order, order => order.id, { orphanRemoval: true, ref: true })
+	order!: Ref<Order>;
+
+	constructor(dto: { userId: string }) {
+		this.user = Reference.createFromPK(User, dto.userId);
 	}
 }
