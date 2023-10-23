@@ -5,8 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon",
-    "lint": "eslint . --ext .ts"
+    "nodemon": "npx nodemon",
+    "lint": "eslint . --ext .ts",
+    "start": "tsc && node build/server",
+    "start:dev": "tsc-watch --onSuccess \"node build/server\""
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,7 @@
     "@mikro-orm/core": "^5.8.9",
     "@mikro-orm/migrations": "^5.8.9",
     "@mikro-orm/postgresql": "^5.8.9",
+    "@mikro-orm/seeder": "^5.8.10",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "joi": "^17.11.0",
