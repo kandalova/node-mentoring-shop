@@ -1,7 +1,7 @@
 import { Entity, OneToOne, PrimaryKey, Property } from "@mikro-orm/core";
 import { v4 } from "uuid";
 import { Order } from "./order";
-import { Ref } from "@mikro-orm/core/entity";
+import { Ref } from "@mikro-orm/core";
 
 @Entity()
 export class Delivery {

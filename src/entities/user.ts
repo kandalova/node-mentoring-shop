@@ -7,7 +7,7 @@ export class User {
 	@PrimaryKey()
 	id: string = v4();
 
-	@OneToMany(() => Cart, cart => cart.id)
+	@OneToMany(() => Cart, cart => cart.user)
 	carts: Collection<Cart> = new Collection<Cart>(this);
 
 }

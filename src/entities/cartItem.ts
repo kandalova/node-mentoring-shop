@@ -1,6 +1,6 @@
 import { Entity, ManyToOne, Property } from "@mikro-orm/core";
 import { Cart } from "./cart";
-import { Ref, Reference } from "@mikro-orm/core/entity";
+import { Ref, Reference } from "@mikro-orm/core";
 import { Product } from "./product";
 
 @Entity()
