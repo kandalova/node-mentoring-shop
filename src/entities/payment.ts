@@ -20,7 +20,7 @@ export class Payment {
 	@OneToOne(() => Order, order => order.payment, { orphanRemoval: true, ref: true })
 	order!: Ref<Order>;
 
-	constructor(dto: { type: string, address: unknown, creditCard: unknown }) {
+	constructor(dto: { type: string, address?: unknown, creditCard?: unknown }) {
 		this.type = dto.type;
 		if (dto.address) {
 			this.address = dto.address;

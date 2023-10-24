@@ -38,7 +38,6 @@ cartRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	catch (err) {
 		next(err);
 	}
-
 });
 
 cartRouter.delete("/", async (req: Request, res: Response, next: NextFunction) => {

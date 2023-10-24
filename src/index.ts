@@ -13,13 +13,15 @@ import productRouter from "./controller/product.controller.ts";
 import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/errors.ts";
 import { getResponseError } from "./utils/utils.ts";
 import { Product } from "./entities/product.ts";
+import { Cart } from "./entities/cart.ts";
 
 
 export const DI = {} as {
 	server: http.Server;
 	orm: MikroORM,
 	em: EntityManager,
-	productRepository: EntityRepository<Product>
+	productRepository: EntityRepository<Product>,
+	cartRepository: EntityRepository<Cart>
 
 }
 
@@ -52,6 +54,7 @@ export const init = (async () => {
 	DI.orm = await MikroORM.init<PostgreSqlDriver>(config);
 	DI.em = DI.orm.em;
 	DI.productRepository = DI.orm.em.getRepository(Product);
+	DI.cartRepository = DI.orm.em.getRepository(Cart);
 
 	app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
 	app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);

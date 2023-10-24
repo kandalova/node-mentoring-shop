@@ -23,5 +23,4 @@ export class Delivery {
 			this.address = dto.address;
 		}
 	}
-
 }
