@@ -1,10 +1,10 @@
-import { findProduct, findProducts } from "../repository/product.repository";
+import { DI } from "..";
 import { IProductResponse, IProductsResponse } from "../scheme/ProductScheme";
 import { throwNoProductExists } from "../utils/errors";
 import { getProductResponse, getProductsResponse } from "../utils/productUtils";
 
 export const getProduct = async (productId: string): Promise<IProductResponse | undefined> => {
-	const product = await findProduct(productId);
+	const product = await DI.productRepository.findOneOrFail(productId);
 	if (!product) {
 		throwNoProductExists();
 	}
@@ -14,6 +14,6 @@ export const getProduct = async (productId: string): Promise<IProductResponse | 
 };
 
 export const getProducts = async (): Promise<IProductsResponse> => {
-	const products = await findProducts();
+	const products = await DI.productRepository.findAll();
 	return getProductsResponse(products);
 };
