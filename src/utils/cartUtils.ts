@@ -51,13 +51,9 @@ export const getCartResponse = (cart: Cart) => {
 }
 
 export const getOrderResponse = async (order: Order) => {
-	console.log(order)
 	const cart = order.cart.getEntity();
-	// const payment = order.payment.getEntity();
-	// const delivery = order.delivery.getEntity();
-	// const payment = await order.payment.load();
-	// const delivery = await order.delivery.load();
-	// console.log(await order.payment.load())
+	await order.delivery.load();
+	await order.payment.load();
 	const omitItems = getOmitOrderItems(cart);
 	const response = {
 		data: {
@@ -66,17 +62,15 @@ export const getOrderResponse = async (order: Order) => {
 			comments: order.comments,
 			total: order.total,
 			cart: { id: cart.id, items: omitItems },
-			payment: order.payment,
-			// delivery: delivery
-			// payment: {
-			// 	type: payment.type,
-			// 	address: payment.address,
-			// 	creditCard: payment.creditCard,
-			// },
-			// delivery: {
-			// 	address: delivery.address,
-			// 	type: delivery.type,
-			// }
+			payment: {
+				type: order.payment.getProperty('type'),
+				address: order.payment.getProperty('address'),
+				creditCard: order.payment.getProperty('creditCard'),
+			},
+			delivery: {
+				address: order.delivery.getProperty('address'),
+				type: order.delivery.getProperty('type'),
+			}
 		},
 		error: null,
 	}
