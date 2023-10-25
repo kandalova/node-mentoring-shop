@@ -1,9 +1,9 @@
 # node-mentoring-shop
-https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/express-layered-architecture/task
+[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/express-layered-architecture/task](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/rdbms/homework)
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
-In this task we will need to modify the application our created in Express and Layered Architecture module by moving data storage to Relational database.
+In this task we will need to modify the application our created in [Express and Layered Architecture module](https://github.com/kandalova/node-mentoring-shop/pull/1)  by moving data storage to Relational database.
 
 The application has 4 primary entities:
 
@@ -27,15 +27,19 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 **Implementation criteria:**
 
 - TypeScript is used.
-- Data is stored in PostgreSQL database.
-- Docker image is used for local development (check Node.js and database interactions section for an example of docker-compose file).
-- ORM is used to query data (e.g TypeORM, Sequelize, Mikro-ORM).
-- Migrations are used to create and delete tables (TypeORM, Sequelize, Mikro-ORM).
-- Seeds are used to populate database with test data, e.g products, orders (TypeORM, Sequelize, Mikro-ORM)
+- Data is stored in `PostgreSQL` database.
+- `Docker image` is used for local development.
+- `ORM` is used to query data (Mikro-ORM).
+- `Migrations` are used to create and delete tables (Mikro-ORM).
+- `Seeds` are used to populate database with test data, e.g products ( Mikro-ORM)
 - If Mikro-ORM is used, type-safe relations and collections are used.
-- 
+
 **API endpoints**
 
 [swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/swagger.md)
 
 <img width="729" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/f1e36899-e171-436e-83c4-72dcb20264e2">
+
+**DB Diagram**
+
+![2023-10-25_15h52_28](https://github.com/kandalova/node-mentoring-shop/assets/26093763/264f07d4-794f-4c8b-bd28-edbee1c82ac7)
