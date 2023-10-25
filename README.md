@@ -43,3 +43,19 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 **DB Diagram**
 
 ![2023-10-25_15h52_28](https://github.com/kandalova/node-mentoring-shop/assets/26093763/264f07d4-794f-4c8b-bd28-edbee1c82ac7)
+
+**Start local DB**
+
+Install docker and run `docker-compose up -d`
+
+**Generate migrations** 
+
+`npx mikro-orm migration:create`
+
+**Run migrations**
+
+`npx mikro-orm migration:up`
+
+**Start server**
+
+`npm run nodemon`
