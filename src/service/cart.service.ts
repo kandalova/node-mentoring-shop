@@ -21,6 +21,12 @@ const findOrder = async (orderId: string) => {
 		{ populate: ['cart', 'cart.cartItems', 'payment', 'delivery'] });
 }
 
+const findCart = async (cartId: string) => {
+	return await DI.cartRepository.findOneOrFail(
+		{ id: cartId },
+		{ fields: ['id', 'cartItems'], populate: ['cartItems', 'cartItems.product'] });
+}
+
 export const createOrGetCart = async (userId: string, isGetOrCreate = false) => {
 	const userCart = await findUserActiveCart(userId);
 	if (userCart && isGetOrCreate) {
@@ -31,7 +37,8 @@ export const createOrGetCart = async (userId: string, isGetOrCreate = false) => 
 	}
 	const newCart = new Cart(userId);
 	await DI.cartRepository.persistAndFlush(newCart);
-	return getCartResponse(newCart);
+	const dbCart = await findCart(newCart.id);
+	return getCartResponse(dbCart);
 };
 
 export const deleteCart = async (userId: string) => {

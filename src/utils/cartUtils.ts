@@ -1,7 +1,5 @@
 import { Cart } from "../entities/cart";
-import { Delivery } from "../entities/delivery";
 import { Order } from "../entities/order";
-import { Payment } from "../entities/payment";
 import { ICart, IDeleteCartResponse, OmitCart } from "../scheme/CartScheme";
 import { IOrderInfo, IOrder, OrderStatuses } from "../scheme/OrderScheme";
 import { createDeepCopy, getUUID } from "./utils";

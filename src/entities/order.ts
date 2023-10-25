@@ -28,7 +28,6 @@ export class Order {
 	@Property()
 	total: number;
 
-	// constructor(dto: { cartId: string, total: number, comments: string, payment: IPayment, delivery: IDelivery }) {
 	constructor(dto: { cartId: string, total: number, comments: string, paymentId: string, deliveryId: string }) {
 		// this.cart = ref(Cart, dto.cartId); //the same, also rel possible for case without <Ref>
 		this.cart = Reference.createFromPK(Cart, dto.cartId);
