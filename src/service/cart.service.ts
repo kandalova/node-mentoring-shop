@@ -15,6 +15,11 @@ const findUserActiveCart = async (userId: string) => {
 		{ fields: ['id', 'cartItems'], populate: ['cartItems', 'cartItems.product'] });
 }
 
+const findOrder = async (orderId: string) => {
+	return await DI.orderRepository.findOneOrFail(
+		{ id: orderId },
+		{ populate: ['cart', 'cart.cartItems', 'payment', 'delivery'] });
+}
 
 export const createOrGetCart = async (userId: string, isGetOrCreate = false) => {
 	const userCart = await findUserActiveCart(userId);
@@ -94,7 +99,6 @@ export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
 		const newPayment = new Payment(dto.payment);
 		const newDelivery = new Delivery(dto.delivery);
 		DI.em.persist([newPayment, newDelivery]);
-		// const newOrder = new Order(dto);
 		const newOrder = new Order(
 			{
 				cartId: userCart.id,
@@ -104,9 +108,10 @@ export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
 				deliveryId: newDelivery.id
 			});
 		userCart.isDeleted = true;
-		DI.em.persist([newOrder, userCart, newPayment, newDelivery]);
+		DI.em.persist([newOrder]);
 		await DI.em.flush();
+		const dbOrder = await findOrder(newOrder.id);
 		// await DI.cartRepository.persistAndFlush(userCart);
-		return await getOrderResponse(newOrder);
+		return getOrderResponse(dbOrder);
 	}
 }

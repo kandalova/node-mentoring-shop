@@ -1,6 +1,6 @@
 import { Entity, Enum, OneToOne, PrimaryKey, Property, Ref, Reference } from "@mikro-orm/core";
 import { v4 } from "uuid";
-import { IDelivery, IPayment, OrderStatuses } from "../scheme/OrderScheme";
+import { OrderStatuses } from "../scheme/OrderScheme";
 import { Cart } from "./cart.ts";
 import { Payment } from "./payment.ts";
 import { Delivery } from "./delivery.ts";

@@ -53,9 +53,11 @@ export const getCartResponse = (cart: Cart) => {
 export const getOrderResponse = async (order: Order) => {
 	console.log(order)
 	const cart = order.cart.getEntity();
+	// const payment = order.payment.getEntity();
+	// const delivery = order.delivery.getEntity();
 	// const payment = await order.payment.load();
 	// const delivery = await order.delivery.load();
-	// console.log(payment)
+	// console.log(await order.payment.load())
 	const omitItems = getOmitOrderItems(cart);
 	const response = {
 		data: {
@@ -64,6 +66,8 @@ export const getOrderResponse = async (order: Order) => {
 			comments: order.comments,
 			total: order.total,
 			cart: { id: cart.id, items: omitItems },
+			payment: order.payment,
+			// delivery: delivery
 			// payment: {
 			// 	type: payment.type,
 			// 	address: payment.address,
@@ -73,19 +77,6 @@ export const getOrderResponse = async (order: Order) => {
 			// 	address: delivery.address,
 			// 	type: delivery.type,
 			// }
-		},
-		error: null,
-	}
-	return response;
-}
-
-export const setCartFixPrices = (cart: Cart) => {
-	const totalPrice = getTotalPrice(cart);
-	const omitItems = getOmitCartItems(cart);
-	const response = {
-		data: {
-			cart: { id: cart.id, items: omitItems },
-			totalPrice: totalPrice
 		},
 		error: null,
 	}

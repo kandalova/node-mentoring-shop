@@ -14,6 +14,7 @@ import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/e
 import { getResponseError } from "./utils/utils.ts";
 import { Product } from "./entities/product.ts";
 import { Cart } from "./entities/cart.ts";
+import { Order } from "./entities/order.ts";
 
 
 export const DI = {} as {
@@ -21,8 +22,8 @@ export const DI = {} as {
 	orm: MikroORM,
 	em: EntityManager,
 	productRepository: EntityRepository<Product>,
-	cartRepository: EntityRepository<Cart>
-
+	cartRepository: EntityRepository<Cart>,
+	orderRepository: EntityRepository<Order>,
 }
 
 export const app = express();
@@ -55,6 +56,7 @@ export const init = (async () => {
 	DI.em = DI.orm.em;
 	DI.productRepository = DI.orm.em.getRepository(Product);
 	DI.cartRepository = DI.orm.em.getRepository(Cart);
+	DI.orderRepository = DI.orm.em.getRepository(Order);
 
 	app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
 	app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
