@@ -6,7 +6,7 @@ import { Order } from "../entities/order";
 import { Payment } from "../entities/payment";
 import { ICartItemByID } from "../scheme/CartScheme";
 import { IOrderInfo } from "../scheme/OrderScheme";
-import { getCartResponse, getDeleteCartResponse, getOrderDto } from "../utils/cartUtils";
+import { getCartResponse, getDeleteCartResponse, getOrderDto, getOrderResponse } from "../utils/cartUtils";
 import { throwCartExistsError, throwEmptyCart, throwNoCartExists, throwNoProductExists } from "../utils/errors";
 
 const findUserActiveCart = async (userId: string) => {
@@ -93,6 +93,7 @@ export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
 		const dto = await getOrderDto(userCart, orderInfo);
 		const newPayment = new Payment(dto.payment);
 		const newDelivery = new Delivery(dto.delivery);
+		DI.em.persist([newPayment, newDelivery]);
 		// const newOrder = new Order(dto);
 		const newOrder = new Order(
 			{
@@ -103,8 +104,9 @@ export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
 				deliveryId: newDelivery.id
 			});
 		userCart.isDeleted = true;
-		await DI.em.persistAndFlush([newOrder, userCart]);
+		DI.em.persist([newOrder, userCart, newPayment, newDelivery]);
+		await DI.em.flush();
 		// await DI.cartRepository.persistAndFlush(userCart);
-		return newOrder;
+		return await getOrderResponse(newOrder);
 	}
 }

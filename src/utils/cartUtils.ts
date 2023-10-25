@@ -1,4 +1,7 @@
 import { Cart } from "../entities/cart";
+import { Delivery } from "../entities/delivery";
+import { Order } from "../entities/order";
+import { Payment } from "../entities/payment";
 import { ICart, IDeleteCartResponse, OmitCart } from "../scheme/CartScheme";
 import { IOrderInfo, IOrder, OrderStatuses } from "../scheme/OrderScheme";
 import { createDeepCopy, getUUID } from "./utils";
@@ -30,6 +33,10 @@ export const getOmitCartItems = (cart: Cart) => {
 	return cart.cartItems.map((item) => ({ product: item.product.id, count: item.count }));
 }
 
+export const getOmitOrderItems = (cart: Cart) => {
+	return cart.cartItems.map((item) => ({ product: item.product, count: item.count }));
+}
+
 export const getCartResponse = (cart: Cart) => {
 	const totalPrice = getTotalPrice(cart);
 	const omitItems = getOmitCartItems(cart);
@@ -37,6 +44,35 @@ export const getCartResponse = (cart: Cart) => {
 		data: {
 			cart: { id: cart.id, items: omitItems },
 			totalPrice: totalPrice
+		},
+		error: null,
+	}
+	return response;
+}
+
+export const getOrderResponse = async (order: Order) => {
+	console.log(order)
+	const cart = order.cart.getEntity();
+	// const payment = await order.payment.load();
+	// const delivery = await order.delivery.load();
+	// console.log(payment)
+	const omitItems = getOmitOrderItems(cart);
+	const response = {
+		data: {
+			id: order.id,
+			status: order.status,
+			comments: order.comments,
+			total: order.total,
+			cart: { id: cart.id, items: omitItems },
+			// payment: {
+			// 	type: payment.type,
+			// 	address: payment.address,
+			// 	creditCard: payment.creditCard,
+			// },
+			// delivery: {
+			// 	address: delivery.address,
+			// 	type: delivery.type,
+			// }
 		},
 		error: null,
 	}

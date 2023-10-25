@@ -36,15 +36,10 @@ export class Order {
 		this.total = dto.total;
 		this.payment = Reference.createFromPK(Payment, dto.paymentId);
 		this.delivery = Reference.createFromPK(Delivery, dto.deliveryId);
-		// const newPayment = new Payment(dto.payment);
-		// const newDelivery = new Delivery(dto.delivery);
-		// this.payment = Reference.createFromPK(Payment, newPayment.id);
-		// this.delivery = Reference.createFromPK(Delivery, newDelivery.id);
-
 	}
 }
 
 export const enum OrderStatus {
-	CREATED,
-	COMPLETED,
+	CREATED = 'created',
+	COMPLETED = 'complited',
 }
