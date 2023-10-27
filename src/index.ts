@@ -1,9 +1,30 @@
+// import * as dotenv from 'dotenv'
+// dotenv.config()
+
 import express, { NextFunction, Request, Response } from "express";
+import http from 'http';
+import { EntityManager, EntityRepository, MikroORM, RequestContext } from '@mikro-orm/core';
+import { PostgreSqlDriver } from "@mikro-orm/postgresql";
+
+import config from './config/orm.config'
 import { findUser } from "./repository/user.repository.ts";
 import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
 import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/errors.ts";
 import { getResponseError } from "./utils/utils.ts";
+import { Product } from "./entities/product.ts";
+import { Cart } from "./entities/cart.ts";
+import { Order } from "./entities/order.ts";
+
+
+export const DI = {} as {
+	server: http.Server;
+	orm: MikroORM,
+	em: EntityManager,
+	productRepository: EntityRepository<Product>,
+	cartRepository: EntityRepository<Cart>,
+	orderRepository: EntityRepository<Order>,
+}
 
 export const app = express();
 const PORT = 3000;
@@ -30,10 +51,18 @@ const errorHandler = async (err: Error | ResponseError, _req: Request, res: Resp
 	res.send(await getResponseError(err.message));
 }
 
-app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
-app.use('/api/products', headerHandler, productRouter, errorHandler);
+export const init = (async () => {
+	DI.orm = await MikroORM.init<PostgreSqlDriver>(config);
+	DI.em = DI.orm.em;
+	DI.productRepository = DI.orm.em.getRepository(Product);
+	DI.cartRepository = DI.orm.em.getRepository(Cart);
+	DI.orderRepository = DI.orm.em.getRepository(Order);
 
+	app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
+	app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
+	app.use('/api/products', headerHandler, productRouter, errorHandler);
 
-app.listen(PORT, () => {
-	console.log(`Server is Fire at http://localhost:${PORT}`);
-});
+	DI.server = app.listen(PORT, () => {
+		console.log(`MikroORM express TS server is Fire at http://localhost:${PORT}`);
+	});
+})();

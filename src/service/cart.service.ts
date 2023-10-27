@@ -1,79 +1,124 @@
-import { deleteCartItem, findUserCart, findUserCartIdx, getCartByIdx, getCartProductIdx, pushCart, pushCartItem, updateCartItemCount, updateCartProperty } from "../repository/cart.repository";
-import { pushOrder } from "../repository/order.repository";
-import { findProduct } from "../repository/product.repository";
-import { CartEditableProperties, ICartItemByID, ICartResponse, IDeleteCartResponse } from "../scheme/CartScheme";
+import { DI } from "..";
+import { Cart } from "../entities/cart";
+import { CartItem } from "../entities/cartItem";
+import { Delivery } from "../entities/delivery";
+import { Order } from "../entities/order";
+import { Payment } from "../entities/payment";
+import { ICartItemByID } from "../scheme/CartScheme";
 import { IOrderInfo } from "../scheme/OrderScheme";
-import { generateCart, generateOrder, getCartResponse, getDeleteCartResponse } from "../utils/cartUtils";
+import { getCartResponse, getDeleteCartResponse, getOrderDto, getOrderResponse } from "../utils/cartUtils";
 import { throwCartExistsError, throwEmptyCart, throwNoCartExists, throwNoProductExists } from "../utils/errors";
 
+const findUserActiveCart = async (userId: string) => {
+	return await DI.cartRepository.findOne(
+		{ user: userId, isDeleted: false },
+		{ fields: ['id', 'cartItems'], populate: ['cartItems', 'cartItems.product'] });
+}
 
+const findOrder = async (orderId: string) => {
+	return await DI.orderRepository.findOneOrFail(
+		{ id: orderId },
+		{ populate: ['cart', 'cart.cartItems', 'payment', 'delivery'] });
+}
 
-export const createOrGetCart = async (userId: string, isGetOrCreate = false): Promise<ICartResponse> => {
-	const userCart = await findUserCart(userId);
+const findCart = async (cartId: string) => {
+	return await DI.cartRepository.findOneOrFail(
+		{ id: cartId },
+		{ fields: ['id', 'cartItems'], populate: ['cartItems', 'cartItems.product'] });
+}
+
+export const createOrGetCart = async (userId: string, isGetOrCreate = false) => {
+	const userCart = await findUserActiveCart(userId);
 	if (userCart && isGetOrCreate) {
 		return getCartResponse(userCart);
 	}
 	if (userCart && !isGetOrCreate) {
 		throwCartExistsError(userId);
 	}
-	const newCart = generateCart(userId);
-	await pushCart(newCart);
-	return getCartResponse(newCart);
+	const newCart = new Cart(userId);
+	await DI.cartRepository.persistAndFlush(newCart);
+	const dbCart = await findCart(newCart.id);
+	return getCartResponse(dbCart);
 };
 
-export const deleteCart = async (userId: string): Promise<IDeleteCartResponse> => {
-	const cartIdx = await findUserCartIdx(userId);
-	if (cartIdx === -1) {
+export const deleteCart = async (userId: string) => {
+	const userCart = await findUserActiveCart(userId);
+	if (!userCart) {
 		throwNoCartExists(userId);
 	}
-	await updateCartProperty(cartIdx, CartEditableProperties.IsDeleted, true);
-	const response = getDeleteCartResponse();
-	return response;
+	else {
+		userCart.isDeleted = true;
+		await DI.cartRepository.persistAndFlush(userCart);
+		const response = getDeleteCartResponse();
+		return response;
+	}
 }
 
-export const postCart = async (userId: string): Promise<ICartResponse> => {
-	return createOrGetCart(userId);
-};
+// export const postCart = async (userId: string): Promise<ICartResponse> => {
+// 	return createOrGetCart(userId);
+// };
 
-export const getCart = async (userId: string): Promise<ICartResponse> => {
-	return createOrGetCart(userId, true);
-}
+// export const getCart = async (userId: string): Promise<ICartResponse> => {
+// 	return createOrGetCart(userId, true);
+// }
 
-export const updateCart = async (userId: string, { productId, count }: ICartItemByID): Promise<ICartResponse> => {
-	const cartIdx = await findUserCartIdx(userId);
-	if (cartIdx === -1) {
+export const updateCart = async (userId: string, { productId, count }: ICartItemByID) => {
+	const cart = await findUserActiveCart(userId);
+	if (!cart) {
 		throwEmptyCart(userId);
 	}
-	const productIdx = await getCartProductIdx(cartIdx, productId);
-	if (count > 0 && productIdx === -1) {
-		const product = await findProduct(productId);
-		if (!product) {
-			throwNoProductExists();
+	else {
+		const cartItem = cart.cartItems.$.find((item) => item.product.id === productId);
+
+		if (count > 0 && !cartItem) {
+			const product = await DI.productRepository.findOneOrFail(productId);
+			if (!product) {
+				throwNoProductExists();
+			}
+			else {
+				const newCartItem = new CartItem({ cartId: cart.id, productId: productId, count: count });
+				cart.cartItems.add(newCartItem);
+			}
 		}
-		else {
-			await pushCartItem(cartIdx, { product, count })
+		if (count > 0 && cartItem) {
+			cartItem.count = count;
+
 		}
+		if (count === 0 && cartItem) {
+			cart.cartItems.remove(cartItem);
+		}
+		await DI.cartRepository.flush();
+		return getCartResponse(cart);
+
 	}
-	if (count > 0 && productIdx >= 0) {
-		await updateCartItemCount(cartIdx, productIdx, count);
-	}
-	if (count === 0 && productIdx >= 0) {
-		await deleteCartItem(cartIdx, productIdx);
-	}
-	return await getCartResponse(await getCartByIdx(cartIdx));
 }
 
 export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
-	const cartIdx = await findUserCartIdx(userId);
-	if (cartIdx === -1) {
+	const userCart = await findUserActiveCart(userId);
+	if (!userCart) {
 		throwEmptyCart(userId);
 	}
-	const cart = await getCartByIdx(cartIdx);
-	if (cart.items.length === 0) {
+	else if (userCart.cartItems.length === 0) {
 		throwEmptyCart(userId);
 	}
-	const newOrder = generateOrder(cart, orderInfo);
-	await pushOrder(newOrder);
-	await updateCartProperty(cartIdx, CartEditableProperties.IsDeleted, true);
-	return newOrder;
+	else {
+		const dto = await getOrderDto(userCart, orderInfo);
+		const newPayment = new Payment(dto.payment);
+		const newDelivery = new Delivery(dto.delivery);
+		DI.em.persist([newPayment, newDelivery]);
+		const newOrder = new Order(
+			{
+				cartId: userCart.id,
+				total: dto.total,
+				comments: dto.comments,
+				paymentId: newPayment.id,
+				deliveryId: newDelivery.id
+			});
+		userCart.isDeleted = true;
+		DI.em.persist([newOrder]);
+		await DI.em.flush();
+		const dbOrder = await findOrder(newOrder.id);
+		// await DI.cartRepository.persistAndFlush(userCart);
+		return getOrderResponse(dbOrder);
+	}
 }
