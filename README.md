@@ -1,9 +1,9 @@
 # node-mentoring-shop
-https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/express-layered-architecture/task
+[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/nosql/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/nosql/homework)
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
-In this task we are going to implement functionality for managing carts, creating orders and products.
+In this task we will modify the application we created in [Express and Layered Architecture](https://github.com/kandalova/node-mentoring-shop/pull/1)  module by moving data storage to NoSQL database.
 
 The application has 4 primary entities:
 
@@ -27,12 +27,12 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 **Implementation criteria:**
 
 - TypeScript is used.
-- Application is implemented following Three Layered Architecture. Layers are separated by file names. For example <code>xxx.repository.ts</code> contains functions to retrieve data (data access layer), <code>xxx.service.ts</code> contains services that implement business logic, <code>xxx.controller.ts</code> contains functions that manage status codes/responses returned (presentation layer).
-- Data is stored either in memory or on file system.
-- joi is used to validate data in PUT /api/profile/cart.
-- Simple authentication middleware is added to check if user with such id exists. User id is passed in x-user-id header.
-- Order entity has copy of products. If you have only product id in order, it may lead to inconsistency. For example, if user creates an order and after that price is changed, the order price shouldn't be changed.
-- For ```DELETE``` ```/api/profile/cart``` soft-delete approach is be used. Make sure that client of your API will not know that soft-delete approach is used.
+- Data is stored in `MongoDB` database.
+- `Docker` image is used for local development (check Running [MongoDB as a Docker Container](https://www.baeldung.com/linux/mongodb-as-docker-container#2-building-container-using-a-compose-file) for an example of docker-compose file).
+- `Mongoose` is used as ODM for querying.
+- `Data Access Layer` is rewritten to query `MongoDB`.
+- Models are created based on entity schemas used in Express and Layered Architecture module.
+- Models have proper relations between each other based on information specified above.
 
 **API endpoints**
 
