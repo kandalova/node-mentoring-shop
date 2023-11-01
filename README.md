@@ -56,3 +56,6 @@ In the project root folder
 - Connect to Mongo via Compass or shell `mongosh --port 27017`
 
 [Running MongoDB as a Docker Container](https://www.baeldung.com/linux/mongodb-as-docker-container#2-building-container-using-a-compose-file)
+
+**First time starting**
+- Create your first database in MongoDB. Then, create your first collection (Example - User).
