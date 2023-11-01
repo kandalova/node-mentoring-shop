@@ -39,3 +39,20 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 [swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/swagger.md)
 
 <img width="729" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/f1e36899-e171-436e-83c4-72dcb20264e2">
+
+**Setup for startring (once)**
+In the project root folder
+
+- Install [podman](https://podman.io/docs/installation)
+- Install [podman-compose](https://github.com/containers/podman-compose#installation)
+- Init podman machine `podman machine init`
+- Install [MongoDB server](https://www.mongodb.com/try/download/community)
+- Install MongoDB tools to connect to MongoDB: [Shell](https://www.mongodb.com/try/download/shell) or [Compass Gui](https://www.mongodb.com/try/download/compass)
+
+**To start(every time)**
+- `podman machine start` - start virtual machine
+- `podman-compose up -d` - starts container from `docker-compose.yaml`
+- `podman ps` - check running containers
+- Connect to Mongo via Compass or shell `mongosh --port 27017`
+
+[Running MongoDB as a Docker Container](https://www.baeldung.com/linux/mongodb-as-docker-container#2-building-container-using-a-compose-file)
