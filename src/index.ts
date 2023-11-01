@@ -5,7 +5,8 @@ import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/e
 import { getResponseError } from "./utils/utils.ts";
 import { connect, disconnect } from "mongoose";
 import { UserModel } from "./scheme/UserScheme.ts";
-// import { UserModel } from "./scheme/UserScheme.ts";
+
+//for seeders
 // import { runUserSeeder } from "./seeder/userSeeder.ts";
 // import { ProductModel } from "./scheme/ProductScheme.ts";
 // import { runProductSeeder } from "./seeder/productSeeder.ts";

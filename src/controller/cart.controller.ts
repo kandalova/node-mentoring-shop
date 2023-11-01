@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import { createOrGetCart, createOrder, deleteCart, updateCart } from "../service/cart.service";
 import Joi from "joi";
 import { getPutSchemeError } from "../utils/errors";
-// import { promiseHandler } from "../utils/utils";
 
 const cartRouter = express.Router();
 cartRouter.use(express.json());
