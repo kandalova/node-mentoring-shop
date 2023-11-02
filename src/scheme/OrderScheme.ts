@@ -1,31 +1,10 @@
 import { Schema, Types, model } from "mongoose";
-import { ICartItem } from "./CartScheme";
-
-type ORDER_STATUS = 'created' | 'completed';
+import { IPopulatedCartItem } from "./CartScheme";
 
 export interface IOrder {
-  id: string,
-  userId: string;
-  cartId: string;
-  items: ICartItem[]
-  payment: {
-    type: string,
-    address?: unknown,
-    creditCard?: unknown,
-  },
-  delivery: {
-    type: string,
-    address: unknown,
-  },
-  comments: string,
-  status: ORDER_STATUS;
-  total: number;
-}
-
-export interface IOrderSchema {
   user: Types.ObjectId;
   cart: Types.ObjectId;
-  items: ICartItem[];
+  items: IPopulatedCartItem[];
   payment: {
     type: string,
     address?: unknown,
@@ -45,7 +24,7 @@ export enum OrderStatuses {
   Complited = "completed"
 }
 
-const orderSchema = new Schema<IOrderSchema>({
+const orderSchema = new Schema<IOrder>({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   cart: { type: Schema.Types.ObjectId, ref: 'Cart', required: true },
   items: {
@@ -70,7 +49,6 @@ const orderSchema = new Schema<IOrderSchema>({
   total: { type: Number, required: true },
 }, { versionKey: false });
 
-export const OrderModel = model<IOrderSchema>('Order', orderSchema);
-
+export const OrderModel = model<IOrder>('Order', orderSchema);
 
 export type IOrderInfo = Pick<IOrder, "payment" | "delivery" | "comments">;

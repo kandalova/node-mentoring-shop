@@ -1,11 +1,11 @@
-import { CartModel, ICartItem, ICartItemByID, ICartResponse, IDeleteCartResponse } from "../scheme/CartScheme";
+import { CartModel, IPopulatedCartItem, ICartItemByID, ICartResponse, IDeleteCartResponse } from "../scheme/CartScheme";
 import { IOrderInfo, OrderModel } from "../scheme/OrderScheme";
 import { ProductModel } from "../scheme/ProductScheme";
 import { generateOrderDTO, getCartResponse, getDeleteCartResponse } from "../utils/cartUtils";
 import { throwEmptyCart, throwNoCartExists, throwNoProductExists } from "../utils/errors";
 
 const findActiveUserCart = async (userId: string) => {
-	return await CartModel.findOne({ user: userId, isDeleted: false }).populate<{ items: ICartItem[] }>('items.product');
+	return await CartModel.findOne({ user: userId, isDeleted: false }).populate<{ items: IPopulatedCartItem[] }>('items.product');
 }
 const findActiveUserCartOrFail = async (userId: string) => {
 	return await CartModel.findOne({ user: userId, isDeleted: false }).orFail(() => throwNoCartExists(userId));
@@ -13,7 +13,7 @@ const findActiveUserCartOrFail = async (userId: string) => {
 
 const findUserCartWithProductOrFail = async (userId: string) => {
 	return await CartModel
-		.findOne({ user: userId, isDeleted: false }).populate<{ items: ICartItem[] }>('items.product')
+		.findOne({ user: userId, isDeleted: false }).populate<{ items: IPopulatedCartItem[] }>('items.product')
 		.orFail(() => throwNoCartExists(userId));
 }
 

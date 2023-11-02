@@ -9,14 +9,6 @@ export interface IProduct {
   product?: string;
 }
 
-export interface IProductResponse extends IResponse {
-  data: IProduct,
-}
-
-export interface IProductsResponse extends IResponse {
-  data: IProduct[],
-}
-
 const productSchema = new Schema<IProduct>({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -25,3 +17,11 @@ const productSchema = new Schema<IProduct>({
 }, { versionKey: false });
 
 export const ProductModel = model<IProduct>("Product", productSchema);
+
+export interface IProductResponse extends IResponse {
+  data: IProduct,
+}
+
+export interface IProductsResponse extends IResponse {
+  data: IProduct[],
+}

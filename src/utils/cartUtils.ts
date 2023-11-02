@@ -1,24 +1,11 @@
-import { Types } from "mongoose";
-import { ICart, ICartItem, ICartItemSchema, ICartResponse, ICartSchema, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
-import { IOrderInfo, IOrder, OrderStatuses } from "../scheme/OrderScheme";
-import { IProduct } from "../scheme/ProductScheme";
-import { createDeepCopy, getUUID } from "./utils";
+import { IPopulatedCartItem, ICartItem, ICartResponse, ICart, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
+import { IOrderInfo } from "../scheme/OrderScheme";
 
-export const generateCart = (userId: string): ICart => {
-	const newCart: ICart = {
-		id: getUUID(),
-		userId: userId,
-		isDeleted: false,
-		items: [],
-	}
-	return newCart;
-}
-
-export const getOmitCart = ({ _id, items }: PopulatedCart | ICartSchema): OmitCart => {
+export const getOmitCart = ({ _id, items }: PopulatedCart | ICart): OmitCart => {
 	return { _id, items };
 }
 
-export const getTotalPrice = (items: ICartItem[] | ICartItemSchema[]): number => {
+export const getTotalPrice = (items: IPopulatedCartItem[] | ICartItem[]): number => {
 	let totalPrice = 0;
 	items.map((item) => {
 		const price = item.product.price;
@@ -27,7 +14,7 @@ export const getTotalPrice = (items: ICartItem[] | ICartItemSchema[]): number =>
 	return totalPrice;
 }
 
-export const getCartResponse = (cart: PopulatedCart | ICartSchema): ICartResponse => {
+export const getCartResponse = (cart: PopulatedCart | ICart): ICartResponse => {
 	const omitCart = getOmitCart(cart);
 	const totalPrice = getTotalPrice(cart.items);
 	const response: ICartResponse = {
