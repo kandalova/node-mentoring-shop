@@ -1,14 +1,14 @@
-import { IPopulatedCartItem, ICartItem, ICartResponse, ICart, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
+import { IPopulatedCartItem,  ICartResponse, ICart, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
 import { IOrderInfo } from "../scheme/OrderScheme";
 
 export const getOmitCart = ({ _id, items }: PopulatedCart | ICart): OmitCart => {
 	return { _id, items };
 }
 
-export const getTotalPrice = (items: IPopulatedCartItem[] | ICartItem[]): number => {
+export const getTotalPrice = (items: IPopulatedCartItem[]): number => {
 	let totalPrice = 0;
 	items.map((item) => {
-		const price = item.product.price;
+		const price = item.product.price
 		totalPrice += price * item.count;
 	});
 	return totalPrice;
@@ -16,14 +16,20 @@ export const getTotalPrice = (items: IPopulatedCartItem[] | ICartItem[]): number
 
 export const getCartResponse = (cart: PopulatedCart | ICart): ICartResponse => {
 	const omitCart = getOmitCart(cart);
-	const totalPrice = getTotalPrice(cart.items);
 	const response: ICartResponse = {
 		data: {
 			cart: omitCart,
-			totalPrice: totalPrice
+			totalPrice: 0
 		},
 		error: null,
 	}
+	return response;
+}
+
+export const getPopulatedCartResponse = (cart: PopulatedCart): ICartResponse => {
+	const response = getCartResponse(cart);
+	const totalPrice = getTotalPrice(cart.items);
+	response.data.totalPrice = totalPrice;
 	return response;
 }
 

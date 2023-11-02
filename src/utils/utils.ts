@@ -11,7 +11,6 @@ export const createDeepCopy = <T>(arr: T[]): T[] => {
 	return cloneDeep(arr);
 }
 
-
 export const promiseHandler = async <T>(prom: Promise<T>, next: NextFunction) => {
 	try {
 		return await prom;

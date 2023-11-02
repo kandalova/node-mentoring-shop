@@ -1,7 +1,7 @@
 import { CartModel, IPopulatedCartItem, ICartItemByID, ICartResponse, IDeleteCartResponse } from "../scheme/CartScheme";
 import { IOrderInfo, OrderModel } from "../scheme/OrderScheme";
 import { ProductModel } from "../scheme/ProductScheme";
-import { generateOrderDTO, getCartResponse, getDeleteCartResponse } from "../utils/cartUtils";
+import { generateOrderDTO, getCartResponse, getDeleteCartResponse, getPopulatedCartResponse } from "../utils/cartUtils";
 import { throwEmptyCart, throwNoCartExists, throwNoProductExists } from "../utils/errors";
 
 const findActiveUserCart = async (userId: string) => {
@@ -20,7 +20,7 @@ const findUserCartWithProductOrFail = async (userId: string) => {
 export const createOrGetCart = async (userId: string): Promise<ICartResponse> => {
 	const userCart = await findActiveUserCart(userId);
 	if (userCart) {
-		return getCartResponse(userCart);
+		return getPopulatedCartResponse(userCart);
 	}
 	const newCart = await CartModel.create({ user: userId });
 	return getCartResponse(newCart);
@@ -51,8 +51,9 @@ export const updateCart = async (userId: string, { productId, count }: ICartItem
 	if (indexToUpdate >= 0 && count === 0) {
 		userCart.items.splice(indexToUpdate, 1);
 	}
-	const updatedCart = await (await userCart.save()).populate('items.product');
-	return getCartResponse(updatedCart);
+	await userCart.save();
+	const updatedCart = await findUserCartWithProductOrFail(userId);
+	return getPopulatedCartResponse(updatedCart);
 }
 
 export const createOrder = async (userId: string, orderInfo: IOrderInfo) => {
