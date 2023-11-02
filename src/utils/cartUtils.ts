@@ -1,5 +1,7 @@
-import { ICart, ICartItem, ICartResponse, IDeleteCartResponse, OmitCart } from "../scheme/CartScheme";
+import { Types } from "mongoose";
+import { ICart, ICartItem, ICartItemSchema, ICartResponse, ICartSchema, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
 import { IOrderInfo, IOrder, OrderStatuses } from "../scheme/OrderScheme";
+import { IProduct } from "../scheme/ProductScheme";
 import { createDeepCopy, getUUID } from "./utils";
 
 export const generateCart = (userId: string): ICart => {
@@ -12,11 +14,11 @@ export const generateCart = (userId: string): ICart => {
 	return newCart;
 }
 
-export const getOmitCart = ({ id, items }: ICart): OmitCart => {
-	return { id, items };
+export const getOmitCart = ({ _id, items }: PopulatedCart | ICartSchema): OmitCart => {
+	return { _id, items };
 }
 
-export const getTotalPrice = (items: ICartItem[]): number => {
+export const getTotalPrice = (items: ICartItem[] | ICartItemSchema[]): number => {
 	let totalPrice = 0;
 	items.map((item) => {
 		const price = item.product.price;
@@ -25,7 +27,7 @@ export const getTotalPrice = (items: ICartItem[]): number => {
 	return totalPrice;
 }
 
-export const getCartResponse = (cart: ICart): ICartResponse => {
+export const getCartResponse = (cart: PopulatedCart | ICartSchema): ICartResponse => {
 	const omitCart = getOmitCart(cart);
 	const totalPrice = getTotalPrice(cart.items);
 	const response: ICartResponse = {
@@ -48,12 +50,16 @@ export const getDeleteCartResponse = (): IDeleteCartResponse => {
 	return response;
 }
 
-export const generateOrder = (cart: ICart, orderInfo: IOrderInfo): IOrder => {
-	const newOrder: IOrder = {
-		id: getUUID(),
-		userId: cart.userId,
-		cartId: cart.id,
-		items: createDeepCopy(cart.items),
+export const generateOrderDTO = (cart: PopulatedCart, orderInfo: IOrderInfo) => {
+	const newOrderDTO = {
+		user: cart.user,
+		cart: cart._id,
+		items: cart.items.map(item => ({
+			product: item.product._id.toString(),
+			title: item.product.title,
+			description: item.product.description,
+			price: item.product.price,
+		})),
 		payment: {
 			type: orderInfo.payment.type,
 			address: orderInfo.payment.address,
@@ -64,8 +70,8 @@ export const generateOrder = (cart: ICart, orderInfo: IOrderInfo): IOrder => {
 			address: orderInfo.delivery.address,
 		},
 		comments: orderInfo.comments,
-		status: OrderStatuses.Created,
 		total: 0,
 	}
-	return newOrder;
+	newOrderDTO.total = getTotalPrice(cart.items);
+	return newOrderDTO;
 }
