@@ -10,6 +10,8 @@ import { UserModel } from "./scheme/UserScheme.ts";
 // import { runUserSeeder } from "./seeder/userSeeder.ts";
 // import { ProductModel } from "./scheme/ProductScheme.ts";
 // import { runProductSeeder } from "./seeder/productSeeder.ts";
+//for cart check
+// import { CartModel } from "./scheme/CartScheme.ts";
 
 export const app = express();
 const PORT = 3000;
@@ -59,6 +61,10 @@ export const init = (async () => {
 		// if (!product) {
 		// 	await runProductSeeder();
 		// }
+		//check cart
+		// const doc = new CartModel({items: [{ count: 5 }]});
+		// console.log('doc', doc);
+		// console.log(doc.items[0].ownerDocument()===doc);
 	}
 	catch (err) {
 		console.log(err);

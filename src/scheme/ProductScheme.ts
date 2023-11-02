@@ -20,6 +20,6 @@ const productSchema = new Schema<IProduct>({
   title: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-});
+}, { versionKey: false });
 
 export const ProductModel = model<IProduct>("Product", productSchema);
