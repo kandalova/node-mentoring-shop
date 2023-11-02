@@ -1,11 +1,32 @@
 import { orderDB } from "../db/db";
-import { IOrder } from "../scheme/OrderScheme";
+import { IPopulatedCartItem } from "../scheme/CartScheme";
 
-export const pushOrder = async (order: IOrder): Promise<number> => {
+type ORDER_STATUS = 'created' | 'completed';
+
+interface IPopulatedOrder {
+	id: string,
+	userId: string;
+	cartId: string;
+	items: IPopulatedCartItem[]
+	payment: {
+		type: string,
+		address?: unknown,
+		creditCard?: unknown,
+	},
+	delivery: {
+		type: string,
+		address: unknown,
+	},
+	comments: string,
+	status: ORDER_STATUS;
+	total: number;
+}
+
+export const pushOrder = async (order: IPopulatedOrder): Promise<number> => {
 	await orderDB.push(order);
 	return orderDB.length - 1;
 }
 
-export const getOrderByIdx = async (idx: number): Promise<IOrder> => {
+export const getOrderByIdx = async (idx: number): Promise<IPopulatedOrder> => {
 	return await orderDB[idx];
 }

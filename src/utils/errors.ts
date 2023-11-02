@@ -10,12 +10,10 @@ interface IResponseError extends Error {
 	status: number;
 }
 
-
 const getResposeError = (message: string, status: number): ResponseError => {
 	const err = new ResponseError(message, status);
 	return err;
 }
-
 
 export const throwNoUser = (id: string) => {
 	throw new Error(`No user ${id}`);
