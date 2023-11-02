@@ -41,6 +41,7 @@ One <code>User</code> can have multiple <code>Order</code>. Each <code>Order</co
 <img width="729" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/f1e36899-e171-436e-83c4-72dcb20264e2">
 
 **Setup for startring (once)**
+
 In the project root folder
 
 - Install [podman](https://podman.io/docs/installation)
@@ -59,3 +60,8 @@ In the project root folder
 
 **First time starting**
 - Create your first database in MongoDB. Then, create your first collection (Example - User).
+
+**Results**
+
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/9e525a2f-c86b-4ecd-9f4e-5f8fe95a6904)
+
