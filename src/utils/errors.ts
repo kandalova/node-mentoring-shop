@@ -58,3 +58,7 @@ export const getForbidenError = (status = 403) => {
 export const getPutSchemeError = (status = 400) => {
 	return getResposeError(`Bad request body`, status)
 }
+
+export const throwRegisterError = (status = 409) => {
+	throw getResposeError(`User Already Exist. Please Login`, status)
+}

@@ -1,4 +1,4 @@
-import { IPopulatedCartItem,  ICartResponse, ICart, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
+import { IPopulatedCartItem, ICartResponse, ICart, IDeleteCartResponse, OmitCart, PopulatedCart } from "../scheme/CartScheme";
 import { IOrderInfo } from "../scheme/OrderScheme";
 
 export const getOmitCart = ({ _id, items }: PopulatedCart | ICart): OmitCart => {

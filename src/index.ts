@@ -6,6 +6,7 @@ import { getResponseError } from "./utils/utils.ts";
 import { UserModel } from "./scheme/UserScheme.ts";
 import { config } from "dotenv";
 import { connectDB } from "./config/database.ts";
+import userRouter from "./controller/user.controller.ts";
 
 //for seeders
 // import { runUserSeeder } from "./seeder/userSeeder.ts";
@@ -53,6 +54,7 @@ export const init = (async () => {
 
 		app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
 		app.use('/api/products', headerHandler, productRouter, errorHandler);
+		app.use('/api/user', userRouter, errorHandler);
 
 		app.listen(PORT, () => {
 			console.log(`Server is Fire at http://localhost:${PORT}`);
