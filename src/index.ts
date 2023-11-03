@@ -3,8 +3,9 @@ import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
 import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/errors.ts";
 import { getResponseError } from "./utils/utils.ts";
-import { connect, disconnect } from "mongoose";
 import { UserModel } from "./scheme/UserScheme.ts";
+import { config } from "dotenv";
+import { connectDB } from "./config/database.ts";
 
 //for seeders
 // import { runUserSeeder } from "./seeder/userSeeder.ts";
@@ -13,8 +14,6 @@ import { UserModel } from "./scheme/UserScheme.ts";
 //for cart check
 // import { CartModel } from "./scheme/CartScheme.ts";
 
-export const app = express();
-const PORT = 3000;
 
 const headerHandler = async (req: Request, _: Response, next: NextFunction) => {
 	try {
@@ -43,15 +42,22 @@ const errorHandler = async (err: Error | ResponseError, _req: Request, res: Resp
 	res.send(await getResponseError(err.message));
 }
 
-app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
-app.use('/api/products', headerHandler, productRouter, errorHandler);
-
 export const init = (async () => {
 	try {
-		await connect("mongodb://127.0.0.1:27017/NM_SHOP");
+		config();
+		const { API_PORT } = process.env;
+		const PORT = API_PORT || 3000;
+
+		await connectDB();
+		const app = express();
+
+		app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
+		app.use('/api/products', headerHandler, productRouter, errorHandler);
+
 		app.listen(PORT, () => {
 			console.log(`Server is Fire at http://localhost:${PORT}`);
 		});
+
 		//mock data for first run
 		// const user = await UserModel.findOne();
 		// if (!user) {
@@ -70,10 +76,3 @@ export const init = (async () => {
 		console.log(err);
 	}
 })();
-
-// listen (ctrl-c)
-process.on("SIGINT", async () => {
-	await disconnect();
-	console.log("Server is disconnected");
-	process.exit();
-});
