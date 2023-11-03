@@ -62,3 +62,7 @@ export const getPutSchemeError = (status = 400) => {
 export const throwRegisterError = (status = 409) => {
 	throw getResposeError(`User Already Exist. Please Login`, status)
 }
+
+export const throwLoginUserError = (status = 400) => {
+	throw getResposeError(`Invalid Credentials`, status)
+}
