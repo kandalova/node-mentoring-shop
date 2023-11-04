@@ -28,7 +28,7 @@ export const loginUser = async (email: string, password: string) => {
 		throwLoginUserError()
 	}
 	const token = jwt.sign(
-		{ user_id: user._id, email, role: user.role },
+		{ user_id: user._id.toString(), email, role: user.role },
 		process.env.TOKEN_KEY!,
 		{ expiresIn: '2h' }
 	);
