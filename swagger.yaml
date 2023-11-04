@@ -1,25 +1,137 @@
 openapi: 3.0.3
 info:
-  title: 
+  title: "shop api"
   version: 1.0.0
 tags:
   - name: cart
   - name: product
+  - name: user
 paths:
+  /login:
+    post:
+      tags: 
+       - user
+      summary: Login user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequestBody'
+      responses:
+        '200':
+          description: User is logined
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjU0NjYwYWVkNTUxYTAyZWU1MzZmZTRjIiwiZW1haWwiOiJ0ZXN0MkBnbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE2OTkxMTE1NTUsImV4cCI6MTY5OTExODc1NX0.2UkbA0U464r2WfKN6RMWvhMzc3wVo71dq6rKvUmoVTs
+        '403':
+          description: Forbidden (when token is missed or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Invalid Token
+        '401':
+          description: Unauthorized (when no token is found)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Token is required
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Cart is empty
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: 'Internal Server error'
+  /register:
+    post:
+      tags: 
+       - user
+      summary: Register user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequestBody'
+      responses:
+        '200':
+          description: User is registered
+          content:
+            text:
+              example: User successfully registered
+        '403':
+          description: Forbidden (when token is missed or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Invalid Token
+        '401':
+          description: Unauthorized (when no token is found)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Token is required
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: Cart is empty
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: 'Internal Server error'
   /api/profile/cart:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - cart
       summary: Get user cart or create if it is missing
-      parameters:
-        - in: header
-          name: x-user-id
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
       responses:
         '200':
           description: Returns user cart
@@ -30,10 +142,10 @@ paths:
               example:
                 data:
                   cart:
-                    id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+                    id: 6546650c159ab6e8bb59f925
                     items:
                       - product:
-                          id: 891389f0-4312-42d6-a650-6fda0959c734
+                          id: 65426846103aa5e276433519
                           title: Book
                           description: Interesting book
                           price: 200
@@ -41,7 +153,7 @@ paths:
                   total: 400
                 error: null
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when token is missed or invalid)
           content:
             application/json:
               schema:
@@ -49,9 +161,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Invalid Token
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found)
           content:
             application/json:
               schema:
@@ -59,7 +171,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '500':
           description: Internal server error
           content:
@@ -71,18 +183,11 @@ paths:
                 error:
                   message: 'Internal Server error'
     put:
+      security:
+        - bearerAuth: []
       tags:
         - cart
       summary: Update user cart
-      parameters:
-        - in: header
-          name: x-user-id
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
       requestBody:
         content:
           application/json:
@@ -90,7 +195,7 @@ paths:
               $ref: '#/components/schemas/UpdateCartRequestBody'
       responses:
         '200':
-          description: Cart can be updated in the following ways - 1) products can be added 2) products can be dropped 3) amount of product might have changed. Request body to be provided contains a snapshot of cart after changes. 
+          description: Cart can be updated in the following ways - 1) products can be added 2) products can be dropped 3) amount of product might have changed. 
           content:
             application/json:
               schema:
@@ -98,10 +203,10 @@ paths:
               example:
                 data:
                   cart:
-                    id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+                    id: 6546650c159ab6e8bb59f925
                     items:
                       - product:
-                          id: 891389f0-4312-42d6-a650-6fda0959c734
+                          id: 65426846103aa5e276433519
                           title: Book
                           description: Interesting book
                           price: 200
@@ -119,7 +224,7 @@ paths:
                 error:
                   message: Products are not valid
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when token is missed or invalid)
           content:
             application/json:
               schema:
@@ -127,9 +232,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Invalid Token
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found)
           content:
             application/json:
               schema:
@@ -137,7 +242,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '404':
           description: Not Found
           content:
@@ -159,6 +264,8 @@ paths:
                 error:
                   message: 'Internal Server error'
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - cart
       summary: Empty user cart
@@ -167,10 +274,9 @@ paths:
           name: x-user-id
           schema:
             type: string
-            format: uuid
           required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
+          description: User id
+          example: '654660aed551a02ee536fe4c'
       responses:
         '200':
           description: Returns success = true if cart was successfully emptied
@@ -183,7 +289,7 @@ paths:
                   success: true
                 error: null
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when user isn't admin)
           content:
             application/json:
               schema:
@@ -191,9 +297,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Forbidden
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found or Header x-user-id is missing or no user with such id)
           content:
             application/json:
               schema:
@@ -201,7 +307,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '500':
           description: Internal server error
           content:
@@ -214,18 +320,11 @@ paths:
                   message: 'Internal Server error'
   /api/profile/cart/checkout:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - cart
       summary: Create an order
-      parameters:
-        - in: header
-          name: x-user-id
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
       responses:
         '200':
           description: Successful operation
@@ -236,18 +335,18 @@ paths:
               example:
                 data:
                   order:
-                    id: 6c36d6fa-f694-4f9c-9b2c-6f7049d38f4a
-                    userId: 6dc52b3c-de7e-431a-84b8-0ec56e0774d4
-                    cartId: cadff0c5-0079-4db8-b6bf-84c9c2633ca3
+                    id: 654664c3159ab6e8bb59f912
+                    userId: 654660aed551a02ee536fe4c
+                    cartId: 65466369efd3f9a3ddf5f223
                     items:
                       - product:
-                          id: 5c293ad0-19d0-41ee-baa3-4c648f9f7697
+                          id: 65426846103aa5e276433519
                           title: Book
                           description: Interesting book
                           price: 200
                         count: 2
                       - product:
-                          id: afdd68c4-d359-45e6-b9fd-c8fdb2a162a0
+                          id: 65426846103aa5e276433518
                           title: Pen
                           description: Cute pen
                           price: 20
@@ -264,7 +363,7 @@ paths:
                     total: 500
                 error: null
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when token is missed or invalid)
           content:
             application/json:
               schema:
@@ -272,9 +371,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Invalid Token
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found)
           content:
             application/json:
               schema:
@@ -282,7 +381,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '400':
           description: Bad request
           content:
@@ -305,18 +404,11 @@ paths:
                   message: 'Internal Server error'
   /api/products:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - product
       summary: Returns a list of products
-      parameters:
-        - in: header
-          name: x-user-id
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
       responses:
         '200':
           description: Returns a list of all products available
@@ -328,17 +420,17 @@ paths:
                   $ref: '#/components/schemas/ProductsResponse'
               example:
                 data:
-                  - id: 5c293ad0-19d0-41ee-baa3-4c648f9f7697
+                  - id: 65426846103aa5e276433519
                     title: Book
                     description: Interesting book
                     price: 200
-                  - id: afdd68c4-d359-45e6-b9fd-c8fdb2a162a0
+                  - id: a65426846103aa5e276433518
                     title: Pen
                     description: Cute pen
                     price: 20
                 error: null
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when token is missed or invalid)
           content:
             application/json:
               schema:
@@ -346,9 +438,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Invalid Token
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found)
           content:
             application/json:
               schema:
@@ -356,7 +448,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '500':
           description: Internal server error
           content:
@@ -369,24 +461,18 @@ paths:
                   message: 'Internal Server error'
   /api/products/{productId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - product
       summary: Returns single product
       parameters:
         - name: productId
           in: path
-          description: Id (uuid) of product to return
+          description: Id  of product to return
           required: true
           schema:
             type: number
-        - in: header
-          name: x-user-id
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: User id (uuid)
-          example: 'eb5a26af-6e4c-4f31-a9b1-3450d42ac66c'
       responses:
         '200':
           description: Successful operation
@@ -396,13 +482,13 @@ paths:
                 $ref: '#/components/schemas/ProductResponse'
               example:
                 data:
-                  id: 5c293ad0-19d0-41ee-baa3-4c648f9f7697
+                  id: 65426846103aa5e276433519
                   title: Book
                   description: Interesting book
                   price: 200
                 error: null
         '403':
-          description: Forbidden (when authorization header is missing)
+          description: Forbidden (when token is missed or invalid)
           content:
             application/json:
               schema:
@@ -410,9 +496,9 @@ paths:
               example:
                 data: null
                 error:
-                  message: You must be authorized user
+                  message: Invalid Token
         '401':
-          description: Unauthorized (when no user matching authorization header is found)
+          description: Unauthorized (when no token is found)
           content:
             application/json:
               schema:
@@ -420,7 +506,7 @@ paths:
               example:
                 data: null
                 error:
-                  message: User is not authorized
+                  message: Token is required
         '404':
           description: Not found
           content:
@@ -442,14 +528,19 @@ paths:
                 error:
                   message: 'Internal Server error'
 components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT  
   schemas:
     Cart:
       type: object
       properties:
         id:
           type: string
-          description: Cart id (uuid)
-          example: dd5ec5ab-deaa-419c-8a6b-7e67b1f7ec87
+          description: Cart id
+          example: 654660f1d551a02ee536fe53
         items:
           type: array
           description: Items added to cart
@@ -470,7 +561,7 @@ components:
         id:
           type: string
           description: Product id (uuid)
-          example: 5c293ad0-19d0-41ee-baa3-4c648f9f7697
+          example: 65426846103aa5e276433519
         title:
           type: string
           description: Product name
@@ -561,7 +652,7 @@ components:
       properties:
         productId:
           type: string
-          example: "915b2f40-9fd9-47f2-9b51-628f3dc69aac"
+          example: "65426846103aa5e276433519"
         count:
           type: number
           example: 5
@@ -574,6 +665,30 @@ components:
         password:
           type: string
           example: "DDQldls?kdpw0fk"
+    LoginUserRequestBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "test2@gmail.com"
+        password:
+          type: string
+          example: 0123456789
+    RegisterUserRequestBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "test2@gmail.com"
+        password:
+          type: string
+          example: 0123456789
+        name:
+          type: string
+          example: Name
+        isAdmin:
+          type: boolean
+          example: true
     EmptySuccessResponse:
       type: object
       properties:

@@ -1,14 +1,17 @@
 ---
-title: API v1.0.0
+title: shop api v1.0.0
 language_tabs:
-  - http: http
-  - HTTP: HTTP
-language_clients:
-  - http: ""
-  - HTTP: ""
+  - shell: Shell
+  - http: HTTP
+  - javascript: JavaScript
+  - ruby: Ruby
+  - python: Python
+  - php: PHP
+  - java: Java
+  - go: Go
 toc_footers: []
 includes: []
-search: false
+search: true
 highlight_theme: darkula
 headingLevel: 2
 
@@ -16,21 +19,25 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="api">null v1.0.0</h1>
+<h1 id="shop-api">shop api v1.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-<h1 id="api-cart">cart</h1>
+# Authentication
+
+- HTTP Authentication, scheme: bearer 
+
+<h1 id="shop-api-cart">cart</h1>
 
 ## get__api_profile_cart
 
 > Code samples
 
-```http
-GET /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X GET /api/profile/cart \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -38,19 +45,138 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 GET /api/profile/cart HTTP/1.1
 
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/profile/cart',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.get '/api/profile/cart',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.get('/api/profile/cart', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('GET','/api/profile/cart', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/profile/cart");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/api/profile/cart", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
 `GET /api/profile/cart`
 
 *Get user cart or create if it is missing*
-
-<h3 id="get__api_profile_cart-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
 
 > Example responses
 
@@ -60,11 +186,11 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": {
     "cart": {
-      "id": "eb5a26af-6e4c-4f31-a9b1-3450d42ac66c",
+      "id": "6546650c159ab6e8bb59f925",
       "items": [
         {
           "product": {
-            "id": "891389f0-4312-42d6-a650-6fda0959c734",
+            "id": "65426846103aa5e276433519",
             "title": "Book",
             "description": "Interesting book",
             "price": 200
@@ -85,7 +211,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -96,7 +222,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Invalid Token"
   }
 }
 ```
@@ -117,24 +243,25 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns user cart|[CartResponse](#schemacartresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
 </aside>
 
 ## put__api_profile_cart
 
 > Code samples
 
-```http
-PUT /api/profile/cart HTTP/1.1
-
-Content-Type: application/json
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X PUT /api/profile/cart \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -143,7 +270,140 @@ PUT /api/profile/cart HTTP/1.1
 
 Content-Type: application/json
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```javascript
+const inputBody = '{
+  "productId": "65426846103aa5e276433519",
+  "count": 5
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/profile/cart',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.put '/api/profile/cart',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.put('/api/profile/cart', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Content-Type' => 'application/json',
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('PUT','/api/profile/cart', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/profile/cart");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("PUT");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("PUT", "/api/profile/cart", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
@@ -155,7 +415,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 ```json
 {
-  "productId": "915b2f40-9fd9-47f2-9b51-628f3dc69aac",
+  "productId": "65426846103aa5e276433519",
   "count": 5
 }
 ```
@@ -164,7 +424,6 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
 |body|body|[UpdateCartRequestBody](#schemaupdatecartrequestbody)|false|none|
 
 > Example responses
@@ -175,11 +434,11 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": {
     "cart": {
-      "id": "eb5a26af-6e4c-4f31-a9b1-3450d42ac66c",
+      "id": "6546650c159ab6e8bb59f925",
       "items": [
         {
           "product": {
-            "id": "891389f0-4312-42d6-a650-6fda0959c734",
+            "id": "65426846103aa5e276433519",
             "title": "Book",
             "description": "Interesting book",
             "price": 200
@@ -211,7 +470,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -222,7 +481,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Invalid Token"
   }
 }
 ```
@@ -253,26 +512,28 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cart can be updated in the following ways - 1) products can be added 2) products can be dropped 3) amount of product might have changed. Request body to be provided contains a snapshot of cart after changes.|[CartResponse](#schemacartresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cart can be updated in the following ways - 1) products can be added 2) products can be dropped 3) amount of product might have changed.|[CartResponse](#schemacartresponse)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad request|[CartResponse](#schemacartresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
 </aside>
 
 ## delete__api_profile_cart
 
 > Code samples
 
-```http
-DELETE /api/profile/cart HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X DELETE /api/profile/cart \
+  -H 'Accept: application/json' \
+  -H 'x-user-id: 654660aed551a02ee536fe4c' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -280,7 +541,138 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 DELETE /api/profile/cart HTTP/1.1
 
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+x-user-id: 654660aed551a02ee536fe4c
+
+```
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'x-user-id':'654660aed551a02ee536fe4c',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/profile/cart',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'x-user-id' => '654660aed551a02ee536fe4c',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.delete '/api/profile/cart',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'x-user-id': '654660aed551a02ee536fe4c',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.delete('/api/profile/cart', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Accept' => 'application/json',
+    'x-user-id' => '654660aed551a02ee536fe4c',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('DELETE','/api/profile/cart', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/profile/cart");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "x-user-id": []string{"654660aed551a02ee536fe4c"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "/api/profile/cart", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
@@ -292,7 +684,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
+|x-user-id|header|string|true|User id|
 
 > Example responses
 
@@ -313,7 +705,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -324,7 +716,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Forbidden"
   }
 }
 ```
@@ -345,23 +737,24 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns success = true if cart was successfully emptied|[EmptySuccessResponse](#schemaemptysuccessresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found or Header x-user-id is missing or no user with such id)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when user isn't admin)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
 </aside>
 
 ## post__api_profile_cart_checkout
 
 > Code samples
 
-```http
-POST /api/profile/cart/checkout HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X POST /api/profile/cart/checkout \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -369,19 +762,138 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 POST /api/profile/cart/checkout HTTP/1.1
 
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/profile/cart/checkout',
+{
+  method: 'POST',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.post '/api/profile/cart/checkout',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.post('/api/profile/cart/checkout', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('POST','/api/profile/cart/checkout', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/profile/cart/checkout");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/api/profile/cart/checkout", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
 `POST /api/profile/cart/checkout`
 
 *Create an order*
-
-<h3 id="post__api_profile_cart_checkout-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
 
 > Example responses
 
@@ -391,13 +903,13 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": {
     "order": {
-      "id": "6c36d6fa-f694-4f9c-9b2c-6f7049d38f4a",
-      "userId": "6dc52b3c-de7e-431a-84b8-0ec56e0774d4",
-      "cartId": "cadff0c5-0079-4db8-b6bf-84c9c2633ca3",
+      "id": "654664c3159ab6e8bb59f912",
+      "userId": "654660aed551a02ee536fe4c",
+      "cartId": "65466369efd3f9a3ddf5f223",
       "items": [
         {
           "product": {
-            "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+            "id": "65426846103aa5e276433519",
             "title": "Book",
             "description": "Interesting book",
             "price": 200
@@ -406,7 +918,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
         },
         {
           "product": {
-            "id": "afdd68c4-d359-45e6-b9fd-c8fdb2a162a0",
+            "id": "65426846103aa5e276433518",
             "title": "Pen",
             "description": "Cute pen",
             "price": 20
@@ -449,7 +961,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -460,7 +972,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Invalid Token"
   }
 }
 ```
@@ -482,25 +994,26 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful operation|[CheckoutResponse](#schemacheckoutresponse)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad request|[CartResponse](#schemacartresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
 </aside>
 
-<h1 id="api-product">product</h1>
+<h1 id="shop-api-product">product</h1>
 
 ## get__api_products
 
 > Code samples
 
-```http
-GET /api/products HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X GET /api/products \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -508,19 +1021,138 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 GET /api/products HTTP/1.1
 
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/products',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.get '/api/products',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.get('/api/products', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('GET','/api/products', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/products");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/api/products", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
 `GET /api/products`
 
 *Returns a list of products*
-
-<h3 id="get__api_products-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
 
 > Example responses
 
@@ -530,13 +1162,13 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": [
     {
-      "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+      "id": "65426846103aa5e276433519",
       "title": "Book",
       "description": "Interesting book",
       "price": 200
     },
     {
-      "id": "afdd68c4-d359-45e6-b9fd-c8fdb2a162a0",
+      "id": "a65426846103aa5e276433518",
       "title": "Pen",
       "description": "Cute pen",
       "price": 20
@@ -552,7 +1184,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -563,7 +1195,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Invalid Token"
   }
 }
 ```
@@ -584,8 +1216,8 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of all products available|Inline|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
 
 <h3 id="get__api_products-responseschema">Response Schema</h3>
@@ -603,19 +1235,20 @@ Status Code **200**
 |» error|[ErrorResponse](#schemaerrorresponse)¦null|false|none|none|
 |»» message|string|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
 </aside>
 
 ## get__api_products_{productId}
 
 > Code samples
 
-```http
-GET /api/products/{productId} HTTP/1.1
-
-Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+```shell
+# You can also use wget
+curl -X GET /api/products/{productId} \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access-token}'
 
 ```
 
@@ -623,7 +1256,132 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 GET /api/products/{productId} HTTP/1.1
 
 Accept: application/json
-x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
+
+```
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/api/products/{productId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+}
+
+result = RestClient.get '/api/products/{productId}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access-token}'
+}
+
+r = requests.get('/api/products/{productId}', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer {access-token}',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('GET','/api/products/{productId}', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/api/products/{productId}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"Bearer {access-token}"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "/api/products/{productId}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
 
 ```
 
@@ -635,8 +1393,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|productId|path|number|true|Id (uuid) of product to return|
-|x-user-id|header|string(uuid)|true|User id (uuid)|
+|productId|path|number|true|Id  of product to return|
 
 > Example responses
 
@@ -645,7 +1402,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 ```json
 {
   "data": {
-    "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+    "id": "65426846103aa5e276433519",
     "title": "Book",
     "description": "Interesting book",
     "price": 200
@@ -660,7 +1417,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "User is not authorized"
+    "message": "Token is required"
   }
 }
 ```
@@ -671,7 +1428,7 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 {
   "data": null,
   "error": {
-    "message": "You must be authorized user"
+    "message": "Invalid Token"
   }
 }
 ```
@@ -703,10 +1460,493 @@ x-user-id: eb5a26af-6e4c-4f31-a9b1-3450d42ac66c
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful operation|[ProductResponse](#schemaproductresponse)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no user matching authorization header is found)|[CartResponse](#schemacartresponse)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when authorization header is missing)|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not found|[CartResponse](#schemacartresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+bearerAuth
+</aside>
+
+<h1 id="shop-api-user">user</h1>
+
+## post__login
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /login \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+```
+
+```http
+POST /login HTTP/1.1
+
+Content-Type: application/json
+Accept: application/json
+
+```
+
+```javascript
+const inputBody = '{
+  "email": "test2@gmail.com",
+  "password": 123456789
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/login',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+result = RestClient.post '/login',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+r = requests.post('/login', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Content-Type' => 'application/json',
+    'Accept' => 'application/json',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('POST','/login', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/login");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/login", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`POST /login`
+
+*Login user*
+
+> Body parameter
+
+```json
+{
+  "email": "test2@gmail.com",
+  "password": 123456789
+}
+```
+
+<h3 id="post__login-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[LoginUserRequestBody](#schemaloginuserrequestbody)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjU0NjYwYWVkNTUxYTAyZWU1MzZmZTRjIiwiZW1haWwiOiJ0ZXN0MkBnbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE2OTkxMTE1NTUsImV4cCI6MTY5OTExODc1NX0.2UkbA0U464r2WfKN6RMWvhMzc3wVo71dq6rKvUmoVTs"
+}
+```
+
+> 400 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Cart is empty"
+  }
+}
+```
+
+> 401 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Token is required"
+  }
+}
+```
+
+> 403 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Invalid Token"
+  }
+}
+```
+
+> 500 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Internal Server error"
+  }
+}
+```
+
+<h3 id="post__login-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User is logined|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad request|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
+
+<h3 id="post__login-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» token|string|false|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## post__register
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /register \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: text'
+
+```
+
+```http
+POST /register HTTP/1.1
+
+Content-Type: application/json
+Accept: text
+
+```
+
+```javascript
+const inputBody = '{
+  "email": "test2@gmail.com",
+  "password": 123456789,
+  "name": "Name",
+  "isAdmin": true
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'text'
+};
+
+fetch('/register',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'text'
+}
+
+result = RestClient.post '/register',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'text'
+}
+
+r = requests.post('/register', headers = headers)
+
+print(r.json())
+
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$headers = array(
+    'Content-Type' => 'application/json',
+    'Accept' => 'text',
+);
+
+$client = new \GuzzleHttp\Client();
+
+// Define array of request body.
+$request_body = array();
+
+try {
+    $response = $client->request('POST','/register', array(
+        'headers' => $headers,
+        'json' => $request_body,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+
+ // ...
+
+```
+
+```java
+URL obj = new URL("/register");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"text"},
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "/register", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
+
+`POST /register`
+
+*Register user*
+
+> Body parameter
+
+```json
+{
+  "email": "test2@gmail.com",
+  "password": 123456789,
+  "name": "Name",
+  "isAdmin": true
+}
+```
+
+<h3 id="post__register-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[RegisterUserRequestBody](#schemaregisteruserrequestbody)|false|none|
+
+> Example responses
+
+> 200 Response
+
+> 400 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Cart is empty"
+  }
+}
+```
+
+> 401 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Token is required"
+  }
+}
+```
+
+> 403 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Invalid Token"
+  }
+}
+```
+
+> 500 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Internal Server error"
+  }
+}
+```
+
+<h3 id="post__register-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User is registered|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad request|[CartResponse](#schemacartresponse)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorized (when no token is found)|[CartResponse](#schemacartresponse)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden (when token is missed or invalid)|[CartResponse](#schemacartresponse)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
+
+<h3 id="post__register-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication
@@ -723,11 +1963,11 @@ This operation does not require authentication
 
 ```json
 {
-  "id": "dd5ec5ab-deaa-419c-8a6b-7e67b1f7ec87",
+  "id": "654660f1d551a02ee536fe53",
   "items": [
     {
       "product": {
-        "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+        "id": "65426846103aa5e276433519",
         "title": "Book",
         "description": "Interesting book",
         "price": 200
@@ -743,7 +1983,7 @@ This operation does not require authentication
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|false|none|Cart id (uuid)|
+|id|string|false|none|Cart id|
 |items|[[CartItem](#schemacartitem)]|false|none|Items added to cart|
 
 <h2 id="tocS_CartItem">CartItem</h2>
@@ -756,7 +1996,7 @@ This operation does not require authentication
 ```json
 {
   "product": {
-    "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+    "id": "65426846103aa5e276433519",
     "title": "Book",
     "description": "Interesting book",
     "price": 200
@@ -782,7 +2022,7 @@ This operation does not require authentication
 
 ```json
 {
-  "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+  "id": "65426846103aa5e276433519",
   "title": "Book",
   "description": "Interesting book",
   "price": 200
@@ -814,7 +2054,7 @@ This operation does not require authentication
   "items": [
     {
       "product": {
-        "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+        "id": "65426846103aa5e276433519",
         "title": "Book",
         "description": "Interesting book",
         "price": 200
@@ -868,11 +2108,11 @@ This operation does not require authentication
 {
   "data": {
     "cart": {
-      "id": "dd5ec5ab-deaa-419c-8a6b-7e67b1f7ec87",
+      "id": "654660f1d551a02ee536fe53",
       "items": [
         {
           "product": {
-            "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+            "id": "65426846103aa5e276433519",
             "title": "Book",
             "description": "Interesting book",
             "price": 200
@@ -916,7 +2156,7 @@ This operation does not require authentication
       "items": [
         {
           "product": {
-            "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+            "id": "65426846103aa5e276433519",
             "title": "Book",
             "description": "Interesting book",
             "price": 200
@@ -963,7 +2203,7 @@ This operation does not require authentication
 ```json
 {
   "data": {
-    "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+    "id": "65426846103aa5e276433519",
     "title": "Book",
     "description": "Interesting book",
     "price": 200
@@ -993,7 +2233,7 @@ This operation does not require authentication
 {
   "data": [
     {
-      "id": "5c293ad0-19d0-41ee-baa3-4c648f9f7697",
+      "id": "65426846103aa5e276433519",
       "title": "Book",
       "description": "Interesting book",
       "price": 200
@@ -1022,7 +2262,7 @@ This operation does not require authentication
 
 ```json
 {
-  "productId": "915b2f40-9fd9-47f2-9b51-628f3dc69aac",
+  "productId": "65426846103aa5e276433519",
   "count": 5
 }
 
@@ -1056,6 +2296,54 @@ This operation does not require authentication
 |---|---|---|---|---|
 |email|string|false|none|none|
 |password|string|false|none|none|
+
+<h2 id="tocS_LoginUserRequestBody">LoginUserRequestBody</h2>
+<!-- backwards compatibility -->
+<a id="schemaloginuserrequestbody"></a>
+<a id="schema_LoginUserRequestBody"></a>
+<a id="tocSloginuserrequestbody"></a>
+<a id="tocsloginuserrequestbody"></a>
+
+```json
+{
+  "email": "test2@gmail.com",
+  "password": 123456789
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|false|none|none|
+|password|string|false|none|none|
+
+<h2 id="tocS_RegisterUserRequestBody">RegisterUserRequestBody</h2>
+<!-- backwards compatibility -->
+<a id="schemaregisteruserrequestbody"></a>
+<a id="schema_RegisterUserRequestBody"></a>
+<a id="tocSregisteruserrequestbody"></a>
+<a id="tocsregisteruserrequestbody"></a>
+
+```json
+{
+  "email": "test2@gmail.com",
+  "password": 123456789,
+  "name": "Name",
+  "isAdmin": true
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|false|none|none|
+|password|string|false|none|none|
+|name|string|false|none|none|
+|isAdmin|boolean|false|none|none|
 
 <h2 id="tocS_EmptySuccessResponse">EmptySuccessResponse</h2>
 <!-- backwards compatibility -->
