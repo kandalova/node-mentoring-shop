@@ -38,11 +38,12 @@ In the project root folder
 - It's possible to use seeder in `index.ts` to mock `Product` model.
 - `Register` and `login` user, use returned token in requests's headers.
 
-
 **API endpoints**
 
-[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_6_shop_express.js/swagger.md)
+[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_9_authorization/swagger.md)
 
-<img width="729" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/f1e36899-e171-436e-83c4-72dcb20264e2">
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/cfdc8b06-f10c-4c05-8d9c-335a30572dde)
 
-**Results**
+**How to convert `yaml` to `md`**
+
+`widdershins swagger.yaml --language_tabs 'http:HTTP' -o swagger.md`
