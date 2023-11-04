@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-
 import { UserModel } from "../scheme/UserScheme";
 import { throwLoginUserError, throwRegisterError } from "../utils/errors";
 

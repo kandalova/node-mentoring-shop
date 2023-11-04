@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { getAuthError, getTokenError, getUnauthorizedError } from "../utils/errors";
 import { UserModel } from "../scheme/UserScheme";
+import { getAuthError, getTokenError, getUnauthorizedError } from "../utils/errors";
 
 export interface CurrentUser {
 	user_id: string
