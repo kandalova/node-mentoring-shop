@@ -74,3 +74,7 @@ export const getAuthError = (status = 401) => {
 export const getTokenError = (status = 401) => {
 	return getResposeError(`Invalid Token`, status);
 }
+
+export const getAdminError = (status = 403) => {
+	return getResposeError(`Forbidden`, status);
+}

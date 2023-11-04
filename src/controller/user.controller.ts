@@ -5,7 +5,7 @@ import { getPutSchemeError } from "../utils/errors";
 
 const registerSchema = Joi.object({
 	name: Joi.string().required(),
-	isAuthor: Joi.boolean().required(),
+	isAdmin: Joi.boolean().required(),
 	email: Joi.string().email().required(),
 	password: Joi.string().length(10).required(),
 })
@@ -40,8 +40,8 @@ userRouter.use(express.json());
 
 userRouter.post("/register", registerValidator, async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { name, isAuthor, email, password } = req.body;
-		await createUser(name, isAuthor, email, password);
+		const { name, isAdmin, email, password } = req.body;
+		await createUser(name, isAdmin, email, password);
 		res.status(201).send('User successfully registered');
 	}
 	catch (err) {

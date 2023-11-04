@@ -8,7 +8,7 @@ const findUserOrFail = async (email: string) => {
 	return UserModel.findOne({ email }).orFail(() => throwLoginUserError());
 }
 
-export const createUser = async (name: string, isAuthor: boolean, email: string, password: string) => {
+export const createUser = async (name: string, isAdmin: boolean, email: string, password: string) => {
 	const oldUser = await UserModel.findOne({ email });
 	if (oldUser) {
 		throwRegisterError();
@@ -18,7 +18,7 @@ export const createUser = async (name: string, isAuthor: boolean, email: string,
 		name,
 		email: email.toLowerCase(),
 		password: encryptedPassword,
-		role: isAuthor ? "author" : "reader"
+		role: isAdmin ? "admin" : "customer"
 	});
 }
 
