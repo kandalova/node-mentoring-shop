@@ -1,12 +1,11 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
-import { ResponseError, getForbidenError, getUnauthorizedError } from "./utils/errors.ts";
-import { getResponseError } from "./utils/utils.ts";
-import { UserModel } from "./scheme/UserScheme.ts";
 import { config } from "dotenv";
 import { connectDB } from "./config/database.ts";
 import userRouter from "./controller/user.controller.ts";
+import { CurrentUser, verifyToken } from "./middleware/auth.ts";
+import { errorHandler } from "./middleware/error.ts";
 
 //for seeders
 // import { runUserSeeder } from "./seeder/userSeeder.ts";
@@ -15,32 +14,13 @@ import userRouter from "./controller/user.controller.ts";
 //for cart check
 // import { CartModel } from "./scheme/CartScheme.ts";
 
-
-const headerHandler = async (req: Request, _: Response, next: NextFunction) => {
-	try {
-		const userId = req.header('x-user-id') ?? '';
-		if (!userId) {
-			next(getForbidenError());
+declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace Express {
+		interface Request {
+			user: CurrentUser
 		}
-		const user = await UserModel.findById(userId);
-		if (!user) {
-			next(getUnauthorizedError());
-		}
-		next();
 	}
-	catch (err) {
-		next(err);
-	}
-}
-
-const errorHandler = async (err: Error | ResponseError, _req: Request, res: Response, _next: NextFunction) => {
-	if (err instanceof ResponseError) {
-		res.status(err.status);
-	}
-	else {
-		res.status(500);
-	}
-	res.send(await getResponseError(err.message));
 }
 
 export const init = (async () => {
@@ -52,9 +32,12 @@ export const init = (async () => {
 		await connectDB();
 		const app = express();
 
-		app.use('/api/profile/cart', headerHandler, cartRouter, errorHandler);
-		app.use('/api/products', headerHandler, productRouter, errorHandler);
-		app.use('/api/user', userRouter, errorHandler);
+		app.use('/api', verifyToken);
+		app.use('/api/profile/cart', cartRouter);
+		app.use('/api/products', productRouter);
+		app.use('/user', userRouter);
+		app.use(errorHandler);
+
 
 		app.listen(PORT, () => {
 			console.log(`Server is Fire at http://localhost:${PORT}`);

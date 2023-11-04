@@ -66,3 +66,11 @@ export const throwRegisterError = (status = 409) => {
 export const throwLoginUserError = (status = 400) => {
 	throw getResposeError(`Invalid Credentials`, status)
 }
+
+export const getAuthError = (status = 401) => {
+	return getResposeError(`Token is required`, status);
+}
+
+export const getTokenError = (status = 401) => {
+	return getResposeError(`Invalid Token`, status);
+}
