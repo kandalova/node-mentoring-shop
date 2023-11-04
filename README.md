@@ -47,3 +47,14 @@ In the project root folder
 **How to convert `yaml` to `md`**
 
 `widdershins swagger.yaml --language_tabs 'http:HTTP' -o swagger.md`
+
+**Results**
+
+<img width="630" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3eca50a1-c116-4b33-9b9c-20326e6baaca">
+
+<img width="636" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/25ad2ebf-467f-4e4c-8e0f-15862ce99225">
+
+<img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/d94ccf58-e32b-4548-bc63-84bcbd43110b">
+
+<img width="629" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3c73b35d-5304-4fbf-9553-2e58b6ca01ed">
+
