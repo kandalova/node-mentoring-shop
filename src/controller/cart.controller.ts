@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
-import { createOrGetCart, createOrder, deleteCart, updateCart } from "../service/cart.service";
 import Joi from "joi";
+import { isAdmin } from "../middleware/isAdmin";
+import { userHeaderHandler } from "../middleware/auth";
+import { createOrGetCart, createOrder, deleteCart, updateCart } from "../service/cart.service";
 import { getPutSchemeError } from "../utils/errors";
 
 const cartRouter = express.Router();
@@ -23,7 +25,7 @@ const putValidator = async (req: Request, _: Response, next: NextFunction) => {
 
 cartRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const userId = req.header('x-user-id')!;
+		const userId = req.user.user_id;
 		const cart = await createOrGetCart(userId);
 		res.send(cart);
 	}
@@ -32,7 +34,7 @@ cartRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-cartRouter.delete("/", async (req: Request, res: Response, next: NextFunction) => {
+cartRouter.delete("/", isAdmin, userHeaderHandler, async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const userId = req.header('x-user-id')!;
 		const data = await deleteCart(userId);
@@ -45,7 +47,7 @@ cartRouter.delete("/", async (req: Request, res: Response, next: NextFunction) =
 
 cartRouter.post("/checkout", async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const userId = req.header('x-user-id')!;
+		const userId = req.user.user_id;
 		const order = await createOrder(userId, req.body);
 		res.send(order);
 	}
@@ -56,7 +58,7 @@ cartRouter.post("/checkout", async (req: Request, res: Response, next: NextFunct
 
 cartRouter.put("/", putValidator, async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const userId = req.header('x-user-id')!;
+		const userId = req.user.user_id;
 		const order = await updateCart(userId, req.body);
 		res.send(order);
 	}
