@@ -11,18 +11,21 @@ export const connectDB = async () => {
 	try {
 		await connect(MONGO_URI);
 		console.log("Successfully connected to database");
-
-		// listen (ctrl-c)
-		process.on("SIGINT", async () => {
-			await disconnect();
-			console.log("DataBase is disconnected");
-			process.exit();
-		});
-
 	}
 	catch (err) {
 		console.log("DataBase connection failed. exiting now...");
 		console.error(err);
 		process.exit(1);
+	}
+}
+
+export const disconnectDB = async () => {
+	try {
+		await disconnect();
+		console.log("DataBase is disconnected");
+
+	}
+	catch (err) {
+		console.log(err);
 	}
 }
