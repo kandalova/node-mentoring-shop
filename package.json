@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon",
+    "start": "set NODE_DEBUG=shop-app&& npx nodemon",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "@types/jsonwebtoken": "^9.0.4",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.8.10",
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -35,6 +36,8 @@
     "lodash.clonedeep": "^4.5.0",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.4",
-    "uuid": "^9.0.1"
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
   }
 }

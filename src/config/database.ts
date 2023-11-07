@@ -1,20 +1,21 @@
 import mongoose, { STATES, connect, disconnect } from "mongoose";
+import logger from "./logger";
+import { debuglogger } from "./debugger";
 
 export const connectDB = async () => {
-	const { MONGO_URI } = process.env;
-
-	if (!MONGO_URI) {
-		console.log("Please provide DataBase URI to connect. exiting now...");
-		process.exit(1);
-	}
-
 	try {
+		const { MONGO_URI } = process.env;
+
+		if (!MONGO_URI) {
+			//logger doean't work
+			logger.error('An error occurred, exiting now', { metadata: 'No DataBase URI to connect' });
+			process.exit(1);
+		}
 		await connect(MONGO_URI);
-		console.log("Successfully connected to database");
+		debuglogger("Successfully connected to database");
 	}
 	catch (err) {
-		console.log("DataBase connection failed. exiting now...");
-		console.error(err);
+		logger.error('An error occurred while DB connecting, exiting now', { metadata: err });
 		process.exit(1);
 	}
 }
@@ -22,11 +23,10 @@ export const connectDB = async () => {
 export const disconnectDB = async () => {
 	try {
 		await disconnect();
-		console.log("DataBase is disconnected");
-
+		debuglogger("DataBase is disconnected");
 	}
 	catch (err) {
-		console.log(err);
+		logger.error('An error occurred while DB disconnecting', { metadata: err });
 	}
 }
 

@@ -1,16 +1,23 @@
+import { createWriteStream } from "fs";
+import path from "path";
 import express from "express";
 import { config } from "dotenv";
+import { Socket } from "net";
+import morgan from "morgan";
 import { connectDB, disconnectDB, isConnected } from "./config/database.ts";
 import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
 import userRouter from "./controller/user.controller.ts";
 import { verifyToken } from "./middleware/auth.ts";
 import { errorHandler } from "./middleware/error.ts";
-import { Socket } from "net";
+import logger from "./config/logger.ts";
+import { debuglogger } from "./config/debugger.ts";
 
 //for seeders
 // import { ProductModel } from "./scheme/ProductScheme.ts";
 // import { runProductSeeder } from "./seeder/productSeeder.ts";
+
+const ROOT_DIR = path.resolve(__dirname, '..');
 
 export const init = (async () => {
 	try {
@@ -19,10 +26,13 @@ export const init = (async () => {
 		const PORT = API_PORT || 3000;
 		const HOST = API_HOST;
 
+		const requestLogStream = createWriteStream(path.join(ROOT_DIR, '/logs/request.log'), { flags: 'a' })
+
 		await connectDB();
 		const app = express();
 		let connections: Socket[] = [];
 
+		app.use(morgan(':method :url :response-time [:date]', { stream: requestLogStream }))
 		app.get('/health', (_, res) => {
 			if (!isConnected()) {
 				res.status(500).json({
@@ -39,9 +49,9 @@ export const init = (async () => {
 		app.use('/user', userRouter);
 		app.use(errorHandler);
 
-
 		const server = app.listen(PORT, HOST, () => {
-			console.log(`Server is Fire at ${HOST}:${PORT}`);
+			debuglogger(`Server is Fire at ${HOST}:${PORT}`);
+			logger.info(`Server is Fire at ${HOST}:${PORT}`);
 		});
 
 		server.on('connection', (connection) => {
@@ -52,16 +62,16 @@ export const init = (async () => {
 		});
 
 		const shutdown = async () => {
-			console.log('Received kill signal, shutting down gracefully');
+			debuglogger('Received kill signal, shutting down gracefully');
 
 			server.close(async () => {
-				console.log('Closed out remaining connections');
+				debuglogger('Closed out remaining connections');
 				await disconnectDB();
 				process.exit(0);
 			});
 
 			setTimeout(async () => {
-				console.error('Could not close connections in time, forcefully shutting down');
+				logger.error('Could not close connections in time, forcefully shutting down');
 				await disconnectDB();
 				process.exit(1);
 			}, 20000);
@@ -83,6 +93,6 @@ export const init = (async () => {
 		// }
 	}
 	catch (err) {
-		console.log(err);
+		logger.error(err);
 	}
 })();
