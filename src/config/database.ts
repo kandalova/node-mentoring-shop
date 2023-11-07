@@ -1,4 +1,4 @@
-import { connect, disconnect } from "mongoose";
+import mongoose, { STATES, connect, disconnect } from "mongoose";
 
 export const connectDB = async () => {
 	const { MONGO_URI } = process.env;
@@ -28,4 +28,9 @@ export const disconnectDB = async () => {
 	catch (err) {
 		console.log(err);
 	}
+}
+
+export const isConnected = () => {
+	const state = STATES[mongoose.connection.readyState];
+	return state === 'connected';
 }

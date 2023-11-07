@@ -1,6 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
-import { connectDB, disconnectDB } from "./config/database.ts";
+import { connectDB, disconnectDB, isConnected } from "./config/database.ts";
 import cartRouter from "./controller/cart.controller.ts";
 import productRouter from "./controller/product.controller.ts";
 import userRouter from "./controller/user.controller.ts";
@@ -23,6 +23,16 @@ export const init = (async () => {
 		const app = express();
 		let connections: Socket[] = [];
 
+		app.get('/health', (_, res) => {
+			if (!isConnected()) {
+				res.status(500).json({
+					message: 'Not connected to database'
+				});
+			}
+			res.status(200).json({
+				message: 'Application is healthy'
+			});
+		});
 		app.use('/api', verifyToken);
 		app.use('/api/profile/cart', cartRouter);
 		app.use('/api/products', productRouter);
