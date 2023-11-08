@@ -17,14 +17,15 @@ import { debuglogger } from "./config/debugger.ts";
 // import { ProductModel } from "./scheme/ProductScheme.ts";
 // import { runProductSeeder } from "./seeder/productSeeder.ts";
 
+
+
 const ROOT_DIR = path.resolve(__dirname, '..');
 
 export const init = (async () => {
 	try {
 		config();
-		const { API_PORT, API_HOST } = process.env;
+		const { API_PORT } = process.env;
 		const PORT = API_PORT || 3000;
-		const HOST = API_HOST;
 
 		const requestLogStream = createWriteStream(path.join(ROOT_DIR, '/logs/request.log'), { flags: 'a' })
 
@@ -49,9 +50,9 @@ export const init = (async () => {
 		app.use('/user', userRouter);
 		app.use(errorHandler);
 
-		const server = app.listen(PORT, HOST, () => {
-			debuglogger(`Server is Fire at ${HOST}:${PORT}`);
-			logger.info(`Server is Fire at ${HOST}:${PORT}`);
+		const server = app.listen(PORT, () => {
+			debuglogger(`Server is Fire at ${PORT}`);
+			logger.info(`Server is Fire at ${PORT}`);
 		});
 
 		server.on('connection', (connection) => {

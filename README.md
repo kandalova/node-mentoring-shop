@@ -29,32 +29,20 @@ In the project root folder
 - `podman machine start` - start virtual machine
 - `podman-compose up -d` - starts container from `docker-compose.yaml`
 - `podman ps` - check running containers
-- Connect to Mongo via Compass or shell `mongosh --port 27017`
 
-[Running MongoDB as a Docker Container](https://www.baeldung.com/linux/mongodb-as-docker-container#2-building-container-using-a-compose-file)
 
-**First time starting**
-- Create your first database in MongoDB. Then, create your first collection (Example - User).
 - It's possible to use seeder in `index.ts` to mock `Product` model.
 - `Register` and `login` user, use returned token in requests's headers.
+
+**To use docker regisrtry**
+- `podman login docker.io`
+- `podman tag api:v1 [docker_user]/[repo]:[version]`
+- `podman push [docker_user]/[repo]:[version]`
+- `podman pull docker://docker.io/[docker_user]/[repo]:[version]`
+- `podman run docker.io/[docker_user]/[repo]:[version]`
 
 **API endpoints**
 
 [swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_9_authorization/swagger.md)
 
 ![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/cfdc8b06-f10c-4c05-8d9c-335a30572dde)
-
-**How to convert `yaml` to `md`**
-
-`widdershins swagger.yaml --language_tabs 'http:HTTP' -o swagger.md`
-
-**Results**
-
-<img width="630" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3eca50a1-c116-4b33-9b9c-20326e6baaca">
-
-<img width="636" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/25ad2ebf-467f-4e4c-8e0f-15862ce99225">
-
-<img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/d94ccf58-e32b-4548-bc63-84bcbd43110b">
-
-<img width="629" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3c73b35d-5304-4fbf-9553-2e58b6ca01ed">
-
