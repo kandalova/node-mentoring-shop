@@ -59,8 +59,6 @@ In the project root folder
 
 **Results**
 
-<img width="645" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/50a73a9c-5337-46cb-85e9-f02aec134f42">
-
 ![2023-11-09_21h05_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/e8001f11-06bd-4253-b82b-fe4b03b2a09b)
 
 ![2023-11-09_21h05_26](https://github.com/kandalova/node-mentoring-shop/assets/26093763/b5816564-21d9-45fd-a403-07c6a8248f6e)
@@ -72,3 +70,6 @@ In the project root folder
 ![2023-11-09_21h17_17](https://github.com/kandalova/node-mentoring-shop/assets/26093763/4344638f-b204-4d00-a672-fafdbbc480d8)
 
 ![2023-11-09_21h18_21](https://github.com/kandalova/node-mentoring-shop/assets/26093763/380bf043-be6d-4638-8160-51aac4228df1)
+
+<img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/7857f5ef-1c2b-4cff-b8cf-5121890ab35c">
+
