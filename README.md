@@ -68,3 +68,7 @@ In the project root folder
 ![2023-11-09_21h07_10](https://github.com/kandalova/node-mentoring-shop/assets/26093763/34edf091-16fc-47f6-bfd2-d57eebe72891)
 
 [My registry](https://hub.docker.com/repository/docker/leylakandalova/nm_shop/general)
+
+![2023-11-09_21h17_17](https://github.com/kandalova/node-mentoring-shop/assets/26093763/4344638f-b204-4d00-a672-fafdbbc480d8)
+
+![2023-11-09_21h18_21](https://github.com/kandalova/node-mentoring-shop/assets/26093763/380bf043-be6d-4638-8160-51aac4228df1)
