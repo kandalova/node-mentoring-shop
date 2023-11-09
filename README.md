@@ -12,7 +12,7 @@ In this task we will need to modify existing [Express application](https://githu
 - Add logger service using [Winston](https://www.npmjs.com/package/winston) add logging of incoming requests (method, path) and request handling (response) time.
 - Dockerize the app according to best practises; try getting an image with as minimal size as possible.
 - Use Docker compose for all the local infrastructure (app and DB).
-- Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it. [My registry](https://hub.docker.com/repository/docker/leylakandalova/nm_shop/general)
+- Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it.
 
 Todo:
 - Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
@@ -53,6 +53,18 @@ In the project root folder
 
 **API endpoints**
 
-[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_9_authorization/swagger.md)
+[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_10_deployment_and_automation/swagger.md)
 
-![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/cfdc8b06-f10c-4c05-8d9c-335a30572dde)
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3b66447c-5cf1-430a-9d49-be493f8c0572)
+
+**Results**
+
+<img width="645" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/50a73a9c-5337-46cb-85e9-f02aec134f42">
+
+![2023-11-09_21h05_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/e8001f11-06bd-4253-b82b-fe4b03b2a09b)
+
+![2023-11-09_21h05_26](https://github.com/kandalova/node-mentoring-shop/assets/26093763/b5816564-21d9-45fd-a403-07c6a8248f6e)
+
+![2023-11-09_21h07_10](https://github.com/kandalova/node-mentoring-shop/assets/26093763/34edf091-16fc-47f6-bfd2-d57eebe72891)
+
+[My registry](https://hub.docker.com/repository/docker/leylakandalova/nm_shop/general)
