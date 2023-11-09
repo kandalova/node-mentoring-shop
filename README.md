@@ -1,19 +1,22 @@
 # node-mentoring-shop
-[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/authorization/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/authorization/homework)
+[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework)
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
-In this task we will need to modify existing [Express application](https://github.com/kandalova/node-mentoring-shop/pull/3) by extending user model, adding authorization and authentication flows.
+In this task we will need to modify existing [Express application](https://github.com/kandalova/node-mentoring-shop/pull/4) and perform the following changes:
 
-**Implementation criteria:**
+- Update config management to use environment variables instead of hardcoded values.
+- Implement graceful shutdown.
+- Add health check API endpoint with DB connection check.
+- Add debug logs to the most significant/important places/services of the app; update npm scripts to run the app with a proper debug logs (based on env variable).
+- Add logger service using [Winston](https://www.npmjs.com/package/winston) add logging of incoming requests (method, path) and request handling (response) time.
+- Dockerize the app according to best practises; try getting an image with as minimal size as possible.
+- Use Docker compose for all the local infrastructure (app and DB).
+- Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it. [My registry](https://hub.docker.com/repository/docker/leylakandalova/nm_shop/general)
 
-- User entity is added - contains id, email (unique), password, role (admin or simple user). Password is stored as hashed value in the database.
--  [Bcrypt](https://www.npmjs.com/package/bcrypt) module is used for hashing passwords.
--  New API endpoint is added for user **sign up** by email and password e.g `/register`. It creates user entity in the database.
--  New API endpoint is added for user **sign in** by email and password e.g `/login`. It returns JWT token which contains user information. Pay attention that password is not encoded in token payload. JWT token expires in 2 hours.
--  JWT token is passed in `Authorization` header for each request (except sign in and sign up) in the following format `Authorization: Bearer <token>`
--  Authentication middleware is added to check if token provided is valid and if user encoded in token exists. If no, `401 Unauthorized` status code is returned. Otherwise, user can do action they intended to do.
--  Only admin users can delete user cart. Authorization middleware is added for this purpose. If token provided doesn't belong to admin member, `403 Forbidden` status code is returned.
+Todo:
+- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
+- Create a repository in internal GitBud.epam.com; push the code of your Node.js app there; based on the sample template create .gitlab-ci.yml template to run a simple CI/CD which will contain all the jobs from the mandatory part (eslit, tests, npm audit, build stage (dockerise the app), and (optionally) static code analysis) that will be executed by shared worker; investigate GitLab CI/CD capabilities, and push the template to start and test the pipeline (note, that your pipeline can be executed with some delay due to a limited capacity of shared workers); providing you created a cloud container registry (AWS ECR, DockerHub, etc.), configure credentials and push the built docker image to the container registry from the pipeline;
 
 **Setup for startring (once)**
 
@@ -30,10 +33,6 @@ In the project root folder
 - `podman-compose up` - build image and start container from `docker-compose.yaml`. Without `-d` flag as it will be needed to agree with some npm instaling. 
 - `podman-compose up --build` - rebuild and start
 - `podman ps` - check running containers
-
-
-- It's possible to use seeder in `index.ts` to mock `Product` model.
-- `Register` and `login` user, use returned token in requests's headers.
 
 **To use docker regisrtry**
 - `podman login docker.io`
