@@ -2,7 +2,7 @@ version: '3.9'
 services:
     api:
         container_name: api
-        image: api:v1
+        image: docker.io/leylakandalova/nm_shop:v1
         build: .
         restart: always
         env_file: ./.env
@@ -12,8 +12,8 @@ services:
             MONGO_URI: mongodb://mongo_db:27017/nm_shop
         depends_on:
             -mongo_db
-        # networks:
-        #     - shop_network
+        networks:
+            - shop_network
         stdin_open: true
         tty: true
     mongo_db:
@@ -26,10 +26,10 @@ services:
         #     - ./data/mongo:/data/configdb
         ports:
             - 27017:27017
-        # networks:
-        #     - shop_network
+        networks:
+            - shop_network
 volumes:
-  mongo_data:
-        
-# networks:
-#     shop_network:
+  mongo_data:      
+networks:
+    shop_network:
+        driver: bridge

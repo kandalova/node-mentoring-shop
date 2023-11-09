@@ -27,7 +27,8 @@ In the project root folder
 
 **To start(every time)**
 - `podman machine start` - start virtual machine
-- `podman-compose up -d` - starts container from `docker-compose.yaml`
+- `podman-compose up` - build image and start container from `docker-compose.yaml`. Without `-d` flag as it will be needed to agree with some npm instaling. 
+- `podman-compose up --build` - rebuild and start
 - `podman ps` - check running containers
 
 
@@ -36,10 +37,20 @@ In the project root folder
 
 **To use docker regisrtry**
 - `podman login docker.io`
+
+***For every single image*** 
 - `podman tag api:v1 [docker_user]/[repo]:[version]`
 - `podman push [docker_user]/[repo]:[version]`
-- `podman pull docker://docker.io/[docker_user]/[repo]:[version]`
+- `podman pull docker.io/[docker_user]/[repo]:[version]`
 - `podman run docker.io/[docker_user]/[repo]:[version]`
+
+***For all images with podman-compose*** 
+- add registry link (docker.io/[docker_user]/[repo]:[version]) in the `image` field in `docker-compose.yaml`
+- `podman-compose build --pull` - build image
+- `podman-compose push` - upload to docker hub
+- `podman-compose pull` - get images from docker hub
+- `podman-compose up` - run containers from images
+
 
 **API endpoints**
 
