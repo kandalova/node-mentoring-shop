@@ -57,6 +57,11 @@ In the project root folder
 - `npm run prepare` - install husky hooks
 - `node node_modules/husky/lib/bin add .husky/commit-msg "npx --no -- co- commitlint --edit ${1}"` - example of setting for hook for windows
 
+**Setup [NodeJSScan](https://github.com/ajinabraham/nodejsscan) as static code analyser and perform quality scan over app** 
+- `podman pull opensecurity/nodejsscan:latest`
+- `podman run -it -p 9090:9090 opensecurity/nodejsscan:latest`
+- open `localhost:9090` and load `zip` or `.git` link 
+
 
 **API endpoints**
 
@@ -85,3 +90,5 @@ In the project root folder
 ![2023-11-10_16h27_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/06a7de6f-ce75-4547-861c-576b394af489)
 
 ![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
+
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/8c028074-bad7-490d-9fed-c308470e3736)
