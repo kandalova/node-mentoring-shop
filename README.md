@@ -14,9 +14,10 @@ In this task we will need to modify existing [Express application](https://githu
 - Dockerize the app according to best practises; try getting an image with as minimal size as possible.
 - Use Docker compose for all the local infrastructure (app and DB).
 - Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it.
+- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
 
 Todo:
-- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
+
 - Create a repository in internal GitBud.epam.com; push the code of your Node.js app there; based on the sample template create .gitlab-ci.yml template to run a simple CI/CD which will contain all the jobs from the mandatory part (eslit, tests, npm audit, build stage (dockerise the app), and (optionally) static code analysis) that will be executed by shared worker; investigate GitLab CI/CD capabilities, and push the template to start and test the pipeline (note, that your pipeline can be executed with some delay due to a limited capacity of shared workers); providing you created a cloud container registry (AWS ECR, DockerHub, etc.), configure credentials and push the built docker image to the container registry from the pipeline;
 
 **Setup for startring (once)**
