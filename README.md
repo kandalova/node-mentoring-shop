@@ -1,6 +1,8 @@
 # node-mentoring-shop
 [https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework)
 
+dummy
+
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
 In this task we will need to modify existing [Express application](https://github.com/kandalova/node-mentoring-shop/pull/4) and perform the following changes:
@@ -72,4 +74,3 @@ In the project root folder
 ![2023-11-09_21h18_21](https://github.com/kandalova/node-mentoring-shop/assets/26093763/380bf043-be6d-4638-8160-51aac4228df1)
 
 <img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/7857f5ef-1c2b-4cff-b8cf-5121890ab35c">
-
