@@ -62,6 +62,8 @@ In the project root folder
 - `podman run -it -p 9090:9090 opensecurity/nodejsscan:latest`
 - open `localhost:9090` and load `zip` or `.git` link 
 
+**Check npm dependencies**
+- `npm audit`
 
 **API endpoints**
 
@@ -92,3 +94,7 @@ In the project root folder
 ![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
 
 ![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/8c028074-bad7-490d-9fed-c308470e3736)
+
+![2023-11-10_17h52_55](https://github.com/kandalova/node-mentoring-shop/assets/26093763/f4c5dce6-cd17-49c7-b5fa-a6986cba0fd8)
+
+
