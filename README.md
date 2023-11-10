@@ -54,7 +54,7 @@ In the project root folder
 
 **Start Husky (once)** 
 - `npm install husky --save-dev`
-- `npm run prepare` - install husky hooks
+- `npx husky install` - enable Git hooks
 - `node node_modules/husky/lib/bin add .husky/commit-msg "npx --no -- co- commitlint --edit ${1}"` - example of setting for hook for windows
 
 

@@ -2,7 +2,7 @@ version: '3.9'
 services:
     api:
         container_name: api
-        image: docker.io/leylakandalova/nm_shop:v1
+        image: docker.io/leylakandalova/nm_shop:v2
         build: .
         restart: always
         env_file: ./.env
