@@ -6,7 +6,35 @@ tags:
   - name: cart
   - name: product
   - name: user
+  - name: health
 paths:
+  /health:
+    get:
+      tags:
+        - health
+      summary: Check app health
+      responses:
+        '200':
+          description: User is logined
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Application is healthy 
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                data: null
+                error:
+                  message: 'Internal Server error'
   /login:
     post:
       tags: 

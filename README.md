@@ -1,19 +1,24 @@
 # node-mentoring-shop
-[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/authorization/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/authorization/homework)
+[https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework)
+
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
-In this task we will need to modify existing [Express application](https://github.com/kandalova/node-mentoring-shop/pull/3) by extending user model, adding authorization and authentication flows.
+In this task we will need to modify existing [Express application](https://github.com/kandalova/node-mentoring-shop/pull/4) and perform the following changes:
 
-**Implementation criteria:**
+- Update config management to use environment variables instead of hardcoded values.
+- Implement graceful shutdown.
+- Add health check API endpoint with DB connection check.
+- Add debug logs to the most significant/important places/services of the app; update npm scripts to run the app with a proper debug logs (based on env variable).
+- Add logger service using [Winston](https://www.npmjs.com/package/winston) add logging of incoming requests (method, path) and request handling (response) time.
+- Dockerize the app according to best practises; try getting an image with as minimal size as possible.
+- Use Docker compose for all the local infrastructure (app and DB).
+- Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it.
+- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
 
-- User entity is added - contains id, email (unique), password, role (admin or simple user). Password is stored as hashed value in the database.
--  [Bcrypt](https://www.npmjs.com/package/bcrypt) module is used for hashing passwords.
--  New API endpoint is added for user **sign up** by email and password e.g `/register`. It creates user entity in the database.
--  New API endpoint is added for user **sign in** by email and password e.g `/login`. It returns JWT token which contains user information. Pay attention that password is not encoded in token payload. JWT token expires in 2 hours.
--  JWT token is passed in `Authorization` header for each request (except sign in and sign up) in the following format `Authorization: Bearer <token>`
--  Authentication middleware is added to check if token provided is valid and if user encoded in token exists. If no, `401 Unauthorized` status code is returned. Otherwise, user can do action they intended to do.
--  Only admin users can delete user cart. Authorization middleware is added for this purpose. If token provided doesn't belong to admin member, `403 Forbidden` status code is returned.
+Todo:
+
+- Create a repository in internal GitBud.epam.com; push the code of your Node.js app there; based on the sample template create .gitlab-ci.yml template to run a simple CI/CD which will contain all the jobs from the mandatory part (eslit, tests, npm audit, build stage (dockerise the app), and (optionally) static code analysis) that will be executed by shared worker; investigate GitLab CI/CD capabilities, and push the template to start and test the pipeline (note, that your pipeline can be executed with some delay due to a limited capacity of shared workers); providing you created a cloud container registry (AWS ECR, DockerHub, etc.), configure credentials and push the built docker image to the container registry from the pipeline;
 
 **Setup for startring (once)**
 
@@ -27,34 +32,70 @@ In the project root folder
 
 **To start(every time)**
 - `podman machine start` - start virtual machine
-- `podman-compose up -d` - starts container from `docker-compose.yaml`
+- `podman-compose up` - build image and start container from `docker-compose.yaml`. Without `-d` flag as it will be needed to agree with some npm instaling. 
+- `podman-compose up --build` - rebuild and start
 - `podman ps` - check running containers
-- Connect to Mongo via Compass or shell `mongosh --port 27017`
+- `npm run start` - start locally but mongo image is needed
 
-[Running MongoDB as a Docker Container](https://www.baeldung.com/linux/mongodb-as-docker-container#2-building-container-using-a-compose-file)
+**To use docker regisrtry**
+- `podman login docker.io`
 
-**First time starting**
-- Create your first database in MongoDB. Then, create your first collection (Example - User).
-- It's possible to use seeder in `index.ts` to mock `Product` model.
-- `Register` and `login` user, use returned token in requests's headers.
+***For every single image*** 
+- `podman tag api:v1 [docker_user]/[repo]:[version]`
+- `podman push [docker_user]/[repo]:[version]`
+- `podman pull docker.io/[docker_user]/[repo]:[version]`
+- `podman run docker.io/[docker_user]/[repo]:[version]`
+
+***For all images with podman-compose*** 
+- add registry link (docker.io/[docker_user]/[repo]:[version]) in the `image` field in `docker-compose.yaml`
+- `podman-compose build --pull` - build image
+- `podman-compose push` - upload to docker hub
+- `podman-compose pull` - get images from docker hub
+- `podman-compose up` - run containers from images
+
+**Start Husky (once)** 
+- `npm install husky --save-dev`
+- `npx husky install` - enable Git hooks
+- `node node_modules/husky/lib/bin add .husky/commit-msg "npx --no -- co- commitlint --edit ${1}"` - example of setting for hook for windows
+
+**Setup [NodeJSScan](https://github.com/ajinabraham/nodejsscan) as static code analyser and perform quality scan over app** 
+- `podman pull opensecurity/nodejsscan:latest`
+- `podman run -it -p 9090:9090 opensecurity/nodejsscan:latest`
+- open `localhost:9090` and load `zip` or `.git` link 
+
+**Check npm dependencies**
+- `npm audit`
 
 **API endpoints**
 
-[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_9_authorization/swagger.md)
+[swagger](https://github.com/kandalova/node-mentoring-shop/blob/task_10_deployment_and_automation/swagger.md)
 
-![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/cfdc8b06-f10c-4c05-8d9c-335a30572dde)
-
-**How to convert `yaml` to `md`**
-
-`widdershins swagger.yaml --language_tabs 'http:HTTP' -o swagger.md`
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3b66447c-5cf1-430a-9d49-be493f8c0572)
 
 **Results**
 
-<img width="630" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3eca50a1-c116-4b33-9b9c-20326e6baaca">
+![2023-11-09_21h05_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/e8001f11-06bd-4253-b82b-fe4b03b2a09b)
 
-<img width="636" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/25ad2ebf-467f-4e4c-8e0f-15862ce99225">
+![2023-11-09_21h05_26](https://github.com/kandalova/node-mentoring-shop/assets/26093763/b5816564-21d9-45fd-a403-07c6a8248f6e)
 
-<img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/d94ccf58-e32b-4548-bc63-84bcbd43110b">
+![2023-11-09_21h07_10](https://github.com/kandalova/node-mentoring-shop/assets/26093763/34edf091-16fc-47f6-bfd2-d57eebe72891)
 
-<img width="629" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/3c73b35d-5304-4fbf-9553-2e58b6ca01ed">
+[My registry](https://hub.docker.com/repository/docker/leylakandalova/nm_shop/general)
+
+![2023-11-09_21h17_17](https://github.com/kandalova/node-mentoring-shop/assets/26093763/4344638f-b204-4d00-a672-fafdbbc480d8)
+
+![2023-11-09_21h18_21](https://github.com/kandalova/node-mentoring-shop/assets/26093763/380bf043-be6d-4638-8160-51aac4228df1)
+
+<img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/7857f5ef-1c2b-4cff-b8cf-5121890ab35c">
+
+![2023-11-10_16h24_37](https://github.com/kandalova/node-mentoring-shop/assets/26093763/7e53a32b-2cf6-4a28-a460-0bece37b74ba)
+
+![2023-11-10_16h27_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/06a7de6f-ce75-4547-861c-576b394af489)
+
+![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
+
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/8c028074-bad7-490d-9fed-c308470e3736)
+
+![2023-11-10_17h52_55](https://github.com/kandalova/node-mentoring-shop/assets/26093763/f4c5dce6-cd17-49c7-b5fa-a6986cba0fd8)
+
 

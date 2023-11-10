@@ -13,6 +13,13 @@
     "noImplicitAny": false,                               /* Enable error reporting for expressions and declarations with an implied 'any' type. */                   /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,                             /* Skip type checking all .d.ts files. */
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "global.d.ts"
+  ],
+  "ts-node": {
+    "files": true
+  },
 }

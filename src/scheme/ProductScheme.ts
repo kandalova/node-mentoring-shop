@@ -2,7 +2,7 @@ import { Schema, Types, model } from "mongoose";
 import { IResponse } from "./ServiceUtils";
 
 export interface IProduct {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId | number;
   title: string;
   description: string;
   price: number;

@@ -1,0 +1,13 @@
+.vscode
+
+venv-podman/
+
+.npm
+
+./node_modules
+
+Dockerfile
+
+.dockerignore
+
+docker-compose.yml

@@ -1,29 +1,36 @@
-import { connect, disconnect } from "mongoose";
+import mongoose, { STATES, connect, disconnect } from "mongoose";
+import logger from "./logger";
+import { debuglogger } from "./debugger";
 
 export const connectDB = async () => {
-	const { MONGO_URI } = process.env;
-	console.log(MONGO_URI)
-
-	if (!MONGO_URI) {
-		console.log("Please provide DataBase URI to connect. exiting now...");
-		process.exit(1);
-	}
-
 	try {
+		const { MONGO_URI } = process.env;
+
+		if (!MONGO_URI) {
+			//logger doean't work
+			logger.error('An error occurred, exiting now', { metadata: 'No DataBase URI to connect' });
+			process.exit(1);
+		}
 		await connect(MONGO_URI);
-		console.log("Successfully connected to database");
-
-		// listen (ctrl-c)
-		process.on("SIGINT", async () => {
-			await disconnect();
-			console.log("DataBase is disconnected");
-			process.exit();
-		});
-
+		debuglogger("Successfully connected to database");
 	}
 	catch (err) {
-		console.log("DataBase connection failed. exiting now...");
-		console.error(err);
+		logger.error('An error occurred while DB connecting, exiting now', { metadata: err });
 		process.exit(1);
 	}
+}
+
+export const disconnectDB = async () => {
+	try {
+		await disconnect();
+		debuglogger("DataBase is disconnected");
+	}
+	catch (err) {
+		logger.error('An error occurred while DB disconnecting', { metadata: err });
+	}
+}
+
+export const isConnected = () => {
+	const state = STATES[mongoose.connection.readyState];
+	return state === 'connected';
 }

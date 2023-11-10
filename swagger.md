@@ -792,6 +792,56 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
+<h1 id="shop-api-health">health</h1>
+
+## get__health
+
+> Code samples
+
+`GET /health`
+
+*Check app health*
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "message": "Application is healthy"
+}
+```
+
+> 500 Response
+
+```json
+{
+  "data": null,
+  "error": {
+    "message": "Internal Server error"
+  }
+}
+```
+
+<h3 id="get__health-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User is logined|Inline|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal server error|[CartResponse](#schemacartresponse)|
+
+<h3 id="get__health-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» message|string|false|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 # Schemas
 
 <h2 id="tocS_Cart">Cart</h2>
