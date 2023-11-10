@@ -1,7 +1,6 @@
 # node-mentoring-shop
 [https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework](https://d17btkcdsmqrmh.cloudfront.net/node-gmp/docs/deploy-and-tools/homework)
 
-dummy
 
 We are going to create an Express application for online shop which sells different types of products (like e.g Amazon).
 
