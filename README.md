@@ -34,6 +34,7 @@ In the project root folder
 - `podman-compose up` - build image and start container from `docker-compose.yaml`. Without `-d` flag as it will be needed to agree with some npm instaling. 
 - `podman-compose up --build` - rebuild and start
 - `podman ps` - check running containers
+- `npm run start` - start locally but mongo image is needed
 
 **To use docker regisrtry**
 - `podman login docker.io`
@@ -50,6 +51,11 @@ In the project root folder
 - `podman-compose push` - upload to docker hub
 - `podman-compose pull` - get images from docker hub
 - `podman-compose up` - run containers from images
+
+**Start Husky (once)** 
+- `npm install husky --save-dev`
+- `npm run prepare` - install husky hooks
+- `node node_modules/husky/lib/bin add .husky/commit-msg "npx --no -- co- commitlint --edit ${1}"` - example of setting for hook for windows
 
 
 **API endpoints**
@@ -79,4 +85,3 @@ In the project root folder
 ![2023-11-10_16h27_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/06a7de6f-ce75-4547-861c-576b394af489)
 
 ![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
-
