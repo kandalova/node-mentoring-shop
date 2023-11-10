@@ -14,9 +14,10 @@ In this task we will need to modify existing [Express application](https://githu
 - Dockerize the app according to best practises; try getting an image with as minimal size as possible.
 - Use Docker compose for all the local infrastructure (app and DB).
 - Set up free container registry (DockerHub) and publish your image there; pull image from registry and run it.
+- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
 
 Todo:
-- Add few [husky](https://www.npmjs.com/package/husky) hooks to your app to: check the [commit](https://www.npmjs.com/package/@commitlint/config-conventional) message, run linting script on commit, run unit tests on push; setup any static code analyser and perform quality scan over your app; check whether you have secure npm dependencies.
+
 - Create a repository in internal GitBud.epam.com; push the code of your Node.js app there; based on the sample template create .gitlab-ci.yml template to run a simple CI/CD which will contain all the jobs from the mandatory part (eslit, tests, npm audit, build stage (dockerise the app), and (optionally) static code analysis) that will be executed by shared worker; investigate GitLab CI/CD capabilities, and push the template to start and test the pipeline (note, that your pipeline can be executed with some delay due to a limited capacity of shared workers); providing you created a cloud container registry (AWS ECR, DockerHub, etc.), configure credentials and push the built docker image to the container registry from the pipeline;
 
 **Setup for startring (once)**
@@ -57,6 +58,13 @@ In the project root folder
 - `npx husky install` - enable Git hooks
 - `node node_modules/husky/lib/bin add .husky/commit-msg "npx --no -- co- commitlint --edit ${1}"` - example of setting for hook for windows
 
+**Setup [NodeJSScan](https://github.com/ajinabraham/nodejsscan) as static code analyser and perform quality scan over app** 
+- `podman pull opensecurity/nodejsscan:latest`
+- `podman run -it -p 9090:9090 opensecurity/nodejsscan:latest`
+- open `localhost:9090` and load `zip` or `.git` link 
+
+**Check npm dependencies**
+- `npm audit`
 
 **API endpoints**
 
@@ -85,3 +93,9 @@ In the project root folder
 ![2023-11-10_16h27_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/06a7de6f-ce75-4547-861c-576b394af489)
 
 ![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
+
+![image](https://github.com/kandalova/node-mentoring-shop/assets/26093763/8c028074-bad7-490d-9fed-c308470e3736)
+
+![2023-11-10_17h52_55](https://github.com/kandalova/node-mentoring-shop/assets/26093763/f4c5dce6-cd17-49c7-b5fa-a6986cba0fd8)
+
+
