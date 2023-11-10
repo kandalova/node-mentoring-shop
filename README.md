@@ -73,3 +73,10 @@ In the project root folder
 ![2023-11-09_21h18_21](https://github.com/kandalova/node-mentoring-shop/assets/26093763/380bf043-be6d-4638-8160-51aac4228df1)
 
 <img width="638" alt="image" src="https://github.com/kandalova/node-mentoring-shop/assets/26093763/7857f5ef-1c2b-4cff-b8cf-5121890ab35c">
+
+![2023-11-10_16h24_37](https://github.com/kandalova/node-mentoring-shop/assets/26093763/7e53a32b-2cf6-4a28-a460-0bece37b74ba)
+
+![2023-11-10_16h27_18](https://github.com/kandalova/node-mentoring-shop/assets/26093763/06a7de6f-ce75-4547-861c-576b394af489)
+
+![2023-11-10_17h32_48](https://github.com/kandalova/node-mentoring-shop/assets/26093763/3dd52192-83f0-46e0-b154-c3979d75de7e)
+
